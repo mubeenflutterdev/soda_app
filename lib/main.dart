@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:soda_bar/presentation/auth_view/splash_screen.dart';
 import 'package:soda_bar/presentation/user_view/home_screen.dart';
 
 Future main() async {
