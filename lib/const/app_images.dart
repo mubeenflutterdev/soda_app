@@ -13,6 +13,11 @@ class AppImages {
   /// small images for dashboard
   static String smallSoda = "assets/images/small_bottle.png";
   static String smallChelly = "assets/images/small_chelly_bottle.png";
+  // images for payment screens
+
+  static String chairs = "assets/logos/chair.png";
+  static String easypaisa = "assets/logos/Easypaisa.png";
+  static String jazzcash = "assets/logos/jazzCash.png";
 
   ///
 }

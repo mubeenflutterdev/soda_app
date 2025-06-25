@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:soda_bar/const/app_colors.dart';
 import 'package:soda_bar/const/app_images.dart';
+import 'package:soda_bar/provider/ui_provider/home_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,6 +17,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    HomeProvider homeProvider = context.read<HomeProvider>();
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -26,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: 30.h),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
+                ////
                 child: Row(
                   children: [
                     SizedBox(width: 20.w),
@@ -62,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 20.h, left: 20.w),
+                padding: EdgeInsets.only(top: 20.h, left: 20.w, bottom: 10.h),
                 child: Text(
                   'All Flavours',
                   style: TextStyle(
@@ -71,11 +76,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
+                      /// first column of products
                       Column(
                         children: [
                           ProductDasboard(
@@ -84,53 +91,58 @@ class _HomeScreenState extends State<HomeScreen> {
                             price: 180,
                           ),
                           SizedBox(height: 10.h),
-
                           ProductDasboard(
-                            img: AppImages.smallSoda,
+                            img: AppImages.smallChelly,
+                            name: 'Cool Chelly',
+                            price: 230,
+                          ),
+                          ProductDasboard(
+                            img: AppImages.smallChelly,
                             name: 'Cool Berry',
                             price: 180,
                           ),
                           SizedBox(height: 10.h),
                           ProductDasboard(
                             img: AppImages.smallSoda,
-                            name: 'Cool Berry',
-                            price: 180,
+                            name: 'Cool Chelly',
+                            price: 230,
                           ),
                         ],
                       ),
                       SizedBox(width: 10.w),
+
+                      /// second column of products
                       Column(
                         children: [
                           ProductDasboard(
                             img: AppImages.smallChelly,
-                            name: 'Cool chelly',
-                            price: 200,
+                            name: 'Cool Berry',
+                            price: 180,
                           ),
                           SizedBox(height: 10.h),
-
                           ProductDasboard(
-                            img: AppImages.smallChelly,
-                            name: 'Cool chelly',
-                            price: 200,
+                            img: AppImages.smallSoda,
+                            name: 'Cool Chelly',
+                            price: 230,
+                          ),
+                          ProductDasboard(
+                            img: AppImages.smallSoda,
+                            name: 'Cool Berry',
+                            price: 180,
                           ),
                           SizedBox(height: 10.h),
-
                           ProductDasboard(
                             img: AppImages.smallChelly,
-                            name: 'Cool chelly',
-                            price: 200,
+                            name: 'Cool Chelly',
+                            price: 230,
                           ),
                         ],
                       ),
+                      SizedBox(width: 10.w),
                     ],
                   ),
                 ),
               ),
-              // ProductDasboard(
-              //   img: AppImages.smallSoda,
-              //   name: 'Cool Berry',
-              //   price: 180,
-              // ),
             ],
           ),
         ),
@@ -300,7 +312,7 @@ class ProductDasboard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(child: Image.asset(img)),
+          Center(child: Image.asset(img, height: 150)),
           Padding(
             padding: EdgeInsets.only(left: 10.w, top: 5.h),
             child: Text(

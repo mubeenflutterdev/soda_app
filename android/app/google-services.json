@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "586143236644",
+    "project_id": "pickuplines-82369",
+    "storage_bucket": "pickuplines-82369.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:586143236644:android:f738b7a986e953e8ad0eb1",
+        "android_client_info": {
+          "package_name": "com.example.soda_bar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzskA7Qev-kY6b_HIi9hL23M4bBqeKnT8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
