@@ -28,7 +28,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: ListView(
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 90.h),
+            SizedBox(height: 60.h),
             Center(
               child: Text('Sign Up', style: TextStyle(fontSize: 32.sp)),
             ),
@@ -111,7 +111,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               borderRadius: 5,
               ontap: () {},
             ),
-            SizedBox(height: 10.h),
+            SizedBox(height: 6.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

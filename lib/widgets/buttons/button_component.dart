@@ -40,7 +40,7 @@ class _ButtonComponentState extends State<ButtonComponent> {
           child: Center(
             child: Text(
               widget.text,
-              style: TextStyle(color: AppColors.primaryColor, fontSize: 24.sp),
+              style: TextStyle(color: AppColors.whiteColor, fontSize: 24.sp),
             ),
           ),
         ),

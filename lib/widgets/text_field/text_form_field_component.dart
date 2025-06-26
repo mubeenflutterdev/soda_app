@@ -41,7 +41,7 @@ class _TextInputFieldComponentState extends State<TextFormFieldComponent> {
           /// suffix here
           suffixIcon: Icon(widget.sufficIcon),
           filled: true,
-          fillColor: AppColors.primaryColor,
+          fillColor: AppColors.whiteColor,
           contentPadding: EdgeInsets.symmetric(
             vertical: widget.contentPaddingHeiht,
             horizontal: widget.contentPaddingWidth,

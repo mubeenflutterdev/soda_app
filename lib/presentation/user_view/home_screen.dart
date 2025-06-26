@@ -197,7 +197,7 @@ class DashBoardComponent extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w400,
-                  color: AppColors.primaryColor,
+                  color: AppColors.whiteColor,
                 ),
               ),
             ),
@@ -212,7 +212,7 @@ class DashBoardComponent extends StatelessWidget {
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
 
-                  color: AppColors.primaryColor,
+                  color: AppColors.whiteColor,
                 ),
               ),
             ),
@@ -223,7 +223,7 @@ class DashBoardComponent extends StatelessWidget {
               left: 20.w,
               child: Container(
                 decoration: BoxDecoration(
-                  color: AppColors.primaryColor,
+                  color: AppColors.whiteColor,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Padding(
@@ -275,7 +275,7 @@ class _CategroiesComponentState extends State<CategroiesComponent> {
           borderRadius: BorderRadius.circular(30.r),
           color: widget.isTap == true
               ? AppColors.buttonBackGround
-              : AppColors.primaryColor,
+              : AppColors.whiteColor,
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16),
@@ -308,7 +308,7 @@ class ProductDasboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 180.w,
-      decoration: BoxDecoration(color: AppColors.primaryColor),
+      decoration: BoxDecoration(color: AppColors.whiteColor),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -343,14 +343,14 @@ class ProductDasboard extends StatelessWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.secondaryColor,
+                  color: AppColors.blackColor,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10.r),
                   ),
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 6.w),
-                  child: Icon(Icons.add, color: AppColors.primaryColor),
+                  child: Icon(Icons.add, color: AppColors.whiteColor),
                 ),
               ),
             ],

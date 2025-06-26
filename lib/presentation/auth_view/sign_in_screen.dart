@@ -16,6 +16,7 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   TextEditingController emailControler = TextEditingController();
+  TextEditingController passwordControler = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +52,7 @@ class _SignInScreenState extends State<SignInScreen> {
               text: 'Password:',
               contentPaddingHeiht: 20,
               contentPaddingWidth: 20,
-              controler: emailControler,
+              controler: passwordControler,
               radius: 9.r,
               sufficIcon: Icons.visibility_off,
             ),
@@ -109,7 +110,7 @@ class _SignInScreenState extends State<SignInScreen> {
               borderRadius: 5,
               ontap: () {},
             ),
-            SizedBox(height: 10.h),
+            SizedBox(height: 6.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

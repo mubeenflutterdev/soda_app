@@ -49,7 +49,7 @@ class _GoogleButtonComponentState extends State<GoogleButtonComponent> {
                 Text(
                   widget.text,
                   style: TextStyle(
-                    color: AppColors.primaryColor,
+                    color: AppColors.whiteColor,
                     fontSize: 19.sp,
                   ),
                 ),

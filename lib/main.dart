@@ -3,20 +3,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:soda_bar/presentation/user_view/check_out_screen.dart';
-
-import 'package:soda_bar/presentation/user_view/home_screen.dart';
+import 'package:soda_bar/presentation/auth_view/splash_screen.dart';
 import 'package:soda_bar/provider/ui_provider/home_provider.dart';
+import 'package:soda_bar/provider/ui_provider/theme_provider.dart';
+import 'package:soda_bar/utils/custom_theme.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => HomeProvider()),
-        // ChangeNotifierProvider(create: (_) => NoteProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
         // ChangeNotifierProvider(create: (_) => ImagePickerProvider()),
         // ChangeNotifierProvider(create: (_) => ProfileProvider()),
       ],
@@ -39,8 +42,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: CheckOutScreen(),
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    return MaterialApp(
+      theme: CustomTheme.lightTheme,
+      themeMode: themeProvider.themeMode,
+      darkTheme: CustomTheme.darkTheme,
+
+      home: OnBoardingScreen(),
+
       debugShowCheckedModeBanner: false,
     );
   }

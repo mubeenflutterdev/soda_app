@@ -18,38 +18,40 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            SizedBox(height: 184.h),
-            Text('Reset Password', style: TextStyle(fontSize: 39.sp)),
-            SizedBox(height: 10.h),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 184.h),
+              Text('Reset Password', style: TextStyle(fontSize: 39.sp)),
+              SizedBox(height: 10.h),
 
-            Text(
-              'Please enter your email to receive a password\n reset link',
-              style: TextStyle(fontSize: 12.sp),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 30.h),
+              Text(
+                'Please enter your email to receive a password\n reset link',
+                style: TextStyle(fontSize: 12.sp),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 30.h),
 
-            TextFormFieldComponent(
-              text: 'Email:',
-              contentPaddingHeiht: 1,
-              contentPaddingWidth: 100,
-              controler: forgetPasswordControler,
-            ),
-            SizedBox(height: 50.h),
+              TextFormFieldComponent(
+                text: 'Email:',
+                contentPaddingHeiht: 1,
+                contentPaddingWidth: 100,
+                controler: forgetPasswordControler,
+              ),
+              SizedBox(height: 50.h),
 
-            ButtonComponent(
-              text: 'Send',
-              borderRadius: 10,
-              ontap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SignUpScreen()),
-                );
-              },
-            ),
-          ],
+              ButtonComponent(
+                text: 'Send',
+                borderRadius: 10,
+                ontap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignUpScreen()),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

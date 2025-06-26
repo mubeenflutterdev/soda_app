@@ -5,10 +5,10 @@ class HomeProvider with ChangeNotifier {
   void packCategries(bool isTap) {
     Color backgroundColor = isTap == true
         ? AppColors.buttonBackGround
-        : AppColors.primaryColor;
+        : AppColors.whiteColor;
     Color textColor = isTap == true
-        ? AppColors.primaryColor
-        : AppColors.secondaryColor;
+        ? AppColors.whiteColor
+        : AppColors.blackColor;
 
     notifyListeners();
   }

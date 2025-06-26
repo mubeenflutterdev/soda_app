@@ -32,7 +32,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               ///
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.primaryColor,
+                  color: AppColors.whiteColor,
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Padding(
