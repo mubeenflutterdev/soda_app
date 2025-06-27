@@ -157,18 +157,21 @@ class DashBoardComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var mediaquery = MediaQuery.of(context).size;
+    double height = mediaquery.height;
+    double width = mediaquery.width;
     return Padding(
       padding: EdgeInsets.only(
-        left: 15.w,
-        right: 15.w,
-        top: 40.h,
-        bottom: 10.h,
+        left: width * 0.05,
+        right: width * 0.05,
+        top: height * 0.04,
+        bottom: height * 0.001,
       ),
       child: Container(
         width: double.infinity,
-        height: 200.h,
+        height: height * 0.28,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(14.r),
+          borderRadius: BorderRadius.circular(width * 0.05),
           gradient: LinearGradient(
             colors: [
               Colors.black,
@@ -179,66 +182,107 @@ class DashBoardComponent extends StatelessWidget {
             ],
           ),
         ),
-        child: Stack(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// background image here
-            Positioned(
-              top: 7.h,
-              left: 20.w,
-              child: Image.asset(AppImages.dashboardtext),
-            ),
+            Padding(
+              //////////////////////////////////////////////////////////////////////////////
+              padding: EdgeInsets.only(left: width * 0.08),
+              child: Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      // flex: 2,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            top: height * 0.02,
 
-            /// 1st heading here
-            Positioned(
-              top: 30.h,
-              left: 20.w,
-              child: Text(
-                '30% off',
-                style: TextStyle(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.whiteColor,
+                            child: Image.asset(AppImages.dashboardtext),
+                          ),
+
+                          /// 1st heading here
+                          Padding(
+                            padding: EdgeInsets.only(top: height * 0.05),
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  // top: height * 0.065,
+                                  child: Text(
+                                    '30% off',
+                                    style: TextStyle(
+                                      fontSize: 20.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.whiteColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          /// 2nd heading here
+                          Padding(
+                            padding: EdgeInsets.only(top: height * 0.1),
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  // top: 1,
+                                  child: Text(
+                                    'The Eid     \nOffer',
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+
+                                      color: AppColors.whiteColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          /// buy now button here
+                          Positioned(
+                            top: height * 0.22,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.whiteColor,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: width * 0.04,
+                                  vertical: height * 0.01,
+                                ),
+                                child: GestureDetector(
+                                  onTap: () {},
+
+                                  child: Text('Buy Now'),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-
-            /// 2nd heading here
-            Positioned(
-              bottom: 50.h,
-              left: 20.w,
-              child: Text(
-                'The Holi\nOffer',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-
-                  color: AppColors.whiteColor,
-                ),
+            // SizedBox(width: 20),
+            Padding(
+              padding: EdgeInsets.only(right: width * 0.06),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ////// soda bottle image here
+                  Image.asset(AppImages.sodaBottleImage, height: 200),
+                ],
               ),
-            ),
-
-            /// buy now button here
-            Positioned(
-              bottom: 10.h,
-              left: 20.w,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.whiteColor,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 15.w,
-                    vertical: 6.h,
-                  ),
-                  child: Text('Buy Now'),
-                ),
-              ),
-            ),
-            ////// soda bottle image here
-            Positioned(
-              right: 10.w,
-              child: Image.asset(AppImages.sodaBottleImage, height: 200),
             ),
           ],
         ),
@@ -308,7 +352,20 @@ class ProductDasboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 180.w,
-      decoration: BoxDecoration(color: AppColors.whiteColor),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15.r),
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          colors: [
+            const Color.fromARGB(255, 36, 219, 195),
+            const Color.fromARGB(255, 42, 228, 203),
+            // const Color.fromARGB(255, 57, 122, 114),
+            const Color.fromARGB(88, 100, 167, 159),
+
+            // Colors.black,
+          ],
+        ),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -346,6 +403,7 @@ class ProductDasboard extends StatelessWidget {
                   color: AppColors.blackColor,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10.r),
+                    bottomRight: Radius.circular(15.r),
                   ),
                 ),
                 child: Padding(

@@ -17,6 +17,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
+      backgroundColor: AppColors.blackColor,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -63,77 +64,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(right: 20.w, top: 0),
-              child: GestureDetector(
-                onTap: () {
-                  print(
-                    ',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,',
-                  );
-                },
-                child: Stack(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: 220.w,
-                        top: 20.h,
-                        bottom: 20.h,
-                      ),
-                      child: Container(
-                        width: 200.w,
-                        height: 47.h,
-                        decoration: BoxDecoration(
-                          border: BoxBorder.all(
-                            color: AppColors.buttonBackGround,
-                          ),
-                          borderRadius: BorderRadius.circular(40.r),
-                          color: AppColors.blackColor,
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 70.w),
-                          child: Icon(
-                            AppIcons.righttrrow,
-                            size: 16.h,
-                            color: AppColors.whiteColor,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    /// 2nd button
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: 220.w,
-                        top: 20.h,
-                        right: 20.w,
-                        bottom: 20.h,
-                      ),
-                      child: Container(
-                        width: 80,
-                        height: 47.h,
-
-                        decoration: BoxDecoration(
-                          border: BoxBorder.all(
-                            color: AppColors.buttonBackGround,
-                          ),
-                          borderRadius: BorderRadius.circular(40.r),
-                          color: AppColors.buttonBackGround,
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(),
-                          child: Center(
-                            child: Text(
-                              "Buy",
-                              style: TextStyle(color: AppColors.whiteColor),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            
           ],
         ),
       ),

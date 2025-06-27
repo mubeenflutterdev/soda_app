@@ -3,16 +3,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:soda_bar/presentation/auth_view/onboarding_screen.dart';
 import 'package:soda_bar/presentation/auth_view/splash_screen.dart';
+import 'package:soda_bar/presentation/user_view/home_screen.dart';
 import 'package:soda_bar/provider/ui_provider/home_provider.dart';
 import 'package:soda_bar/provider/ui_provider/theme_provider.dart';
 import 'package:soda_bar/utils/custom_theme.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(
@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
       themeMode: themeProvider.themeMode,
       darkTheme: CustomTheme.darkTheme,
 
-      home: OnBoardingScreen(),
+      home: HomeScreen(),
 
       debugShowCheckedModeBanner: false,
     );
