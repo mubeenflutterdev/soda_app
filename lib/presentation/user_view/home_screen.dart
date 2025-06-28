@@ -21,130 +21,78 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              DashBoardComponent(),
-              SizedBox(height: 30.h),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                ////
-                child: Row(
-                  children: [
-                    SizedBox(width: 20.w),
+        body: Column(
+          // mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            DashBoardComponent(),
+            SizedBox(height: 30.h),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              ////
+              child: Row(
+                children: [
+                  SizedBox(width: 20.w),
 
-                    CategroiesComponent(
-                      isTap: true,
-                      image: AppImages.logo_1,
-                      text: '1 Pack',
-                      ontap: () {
-                        setState(() {});
-                      },
-                    ),
-                    SizedBox(width: 20.w),
-                    CategroiesComponent(
-                      isTap: false,
-                      image: AppImages.logo_2,
-                      text: '2 Pack',
-                      ontap: () {
-                        setState(() {});
-                      },
-                    ),
-                    SizedBox(width: 20.w),
+                  CategroiesComponent(
+                    isTap: true,
+                    image: AppImages.logo_1,
+                    text: '1 Pack',
+                    ontap: () {
+                      setState(() {});
+                    },
+                  ),
+                  SizedBox(width: 20.w),
+                  CategroiesComponent(
+                    isTap: false,
+                    image: AppImages.logo_2,
+                    text: '2 Pack',
+                    ontap: () {
+                      setState(() {});
+                    },
+                  ),
+                  SizedBox(width: 20.w),
 
-                    CategroiesComponent(
-                      isTap: false,
-                      image: AppImages.logo_4,
-                      text: '4 Pack',
-                      ontap: () {
-                        setState(() {});
-                      },
-                    ),
-                    SizedBox(width: 20.w),
-                  ],
-                ),
+                  CategroiesComponent(
+                    isTap: false,
+                    image: AppImages.logo_4,
+                    text: '4 Pack',
+                    ontap: () {
+                      setState(() {});
+                    },
+                  ),
+                  SizedBox(width: 20.w),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 20.h, left: 20.w, bottom: 10.h),
-                child: Text(
-                  'All Flavours',
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.bold,
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 20.h, left: 20.w, bottom: 10.h),
+              child: Text(
+                'All Flavours',
+                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Expanded(
+              child: SizedBox(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  child: ListView.builder(
+                    // scrollDirection: Axis.horizontal,
+                    // padding: EdgeInsets.symmetric(horizontal: 10),
+                    itemCount: 10,
+
+                    itemBuilder: (context, index) {
+                      return ProductDasboard(
+                        img: AppImages.smallSoda,
+                        name: "Soda",
+                        price: 340,
+                      );
+                    },
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      /// first column of products
-                      Column(
-                        children: [
-                          ProductDasboard(
-                            img: AppImages.smallSoda,
-                            name: 'Cool Berry',
-                            price: 180,
-                          ),
-                          SizedBox(height: 10.h),
-                          ProductDasboard(
-                            img: AppImages.smallChelly,
-                            name: 'Cool Chelly',
-                            price: 230,
-                          ),
-                          ProductDasboard(
-                            img: AppImages.smallChelly,
-                            name: 'Cool Berry',
-                            price: 180,
-                          ),
-                          SizedBox(height: 10.h),
-                          ProductDasboard(
-                            img: AppImages.smallSoda,
-                            name: 'Cool Chelly',
-                            price: 230,
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: 10.w),
-
-                      /// second column of products
-                      Column(
-                        children: [
-                          ProductDasboard(
-                            img: AppImages.smallChelly,
-                            name: 'Cool Berry',
-                            price: 180,
-                          ),
-                          SizedBox(height: 10.h),
-                          ProductDasboard(
-                            img: AppImages.smallSoda,
-                            name: 'Cool Chelly',
-                            price: 230,
-                          ),
-                          ProductDasboard(
-                            img: AppImages.smallSoda,
-                            name: 'Cool Berry',
-                            price: 180,
-                          ),
-                          SizedBox(height: 10.h),
-                          ProductDasboard(
-                            img: AppImages.smallChelly,
-                            name: 'Cool Chelly',
-                            price: 230,
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: 10.w),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -350,71 +298,78 @@ class ProductDasboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 180.w,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15.r),
-        gradient: LinearGradient(
-          begin: Alignment.topRight,
-          colors: [
-            const Color.fromARGB(255, 36, 219, 195),
-            const Color.fromARGB(255, 42, 228, 203),
-            // const Color.fromARGB(255, 57, 122, 114),
-            const Color.fromARGB(88, 100, 167, 159),
+    return Padding(
+      padding: EdgeInsets.only(top: 10.h),
+      child: Container(
+        // width: 10.w,
+        height: 400,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.r),
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            colors: [
+              const Color.fromARGB(255, 36, 219, 195),
+              const Color.fromARGB(255, 42, 228, 203),
+              // const Color.fromARGB(255, 57, 122, 114),
+              const Color.fromARGB(86, 201, 193, 193),
 
-            // Colors.black,
-          ],
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(child: Image.asset(img, height: 150)),
-          Padding(
-            padding: EdgeInsets.only(left: 10.w, top: 5.h),
-            child: Text(
-              "All New",
-              style: TextStyle(color: AppColors.buttonBackGround),
-            ),
-          ),
-
-          Padding(
-            padding: EdgeInsets.only(top: 6.h, left: 10.w),
-            child: Text(
-              name,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19.sp),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 10.w),
-                child: Text(
-                  '\&$price',
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColors.blackColor,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10.r),
-                    bottomRight: Radius.circular(15.r),
-                  ),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 6.w),
-                  child: Icon(Icons.add, color: AppColors.whiteColor),
-                ),
-              ),
+              // Colors.black,
             ],
           ),
-          // SizedBox(height: 10.h),
-        ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(child: Image.asset(img, height: 150)),
+            Padding(
+              padding: EdgeInsets.only(left: 10.w, top: 5.h),
+              child: Text(
+                "All New",
+                style: TextStyle(color: AppColors.blackColor),
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.only(top: 6.h, left: 10.w),
+              child: Text(
+                name,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19.sp),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 10.w),
+                  child: Text(
+                    '\&$price',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.blackColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10.r),
+                      bottomRight: Radius.circular(15.r),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 4.h,
+                      horizontal: 6.w,
+                    ),
+                    child: Icon(Icons.add, color: AppColors.whiteColor),
+                  ),
+                ),
+              ],
+            ),
+            // SizedBox(height: 10.h),
+          ],
+        ),
       ),
     );
   }

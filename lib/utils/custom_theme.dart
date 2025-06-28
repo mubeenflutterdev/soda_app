@@ -23,6 +23,11 @@ class CustomTheme {
         fontSize: 30.sp,
         fontWeight: FontWeight.bold,
       ),
+      titleSmall: GoogleFonts.montserrat(
+        color: AppColors.blackColor,
+        fontSize: 20.sp,
+        fontWeight: FontWeight.bold,
+      ),
     ),
   );
 
@@ -31,5 +36,25 @@ class CustomTheme {
     primaryColor: AppColors.whiteColor,
     scaffoldBackgroundColor: AppColors.whiteColor,
     cardColor: AppColors.greenColor,
+    textTheme: TextTheme(
+      /// title theme for title in app
+      titleLarge: GoogleFonts.montserrat(
+        color: AppColors.blackColor,
+        fontSize: 60.sp,
+        fontWeight: FontWeight.bold,
+      ),
+
+      /// title theme for suntitle in app
+      titleMedium: GoogleFonts.montserrat(
+        color: AppColors.blackColor,
+        fontSize: 30.sp,
+        fontWeight: FontWeight.bold,
+      ),
+      titleSmall: GoogleFonts.montserrat(
+        color: AppColors.blackColor,
+        fontSize: 16.sp,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
   );
 }

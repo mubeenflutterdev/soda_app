@@ -5,7 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:soda_bar/presentation/auth_view/onboarding_screen.dart';
 import 'package:soda_bar/presentation/auth_view/splash_screen.dart';
+import 'package:soda_bar/presentation/user_view/check_out_screen.dart';
+import 'package:soda_bar/presentation/user_view/details_screen.dart';
 import 'package:soda_bar/presentation/user_view/home_screen.dart';
+import 'package:soda_bar/presentation/user_view/profile_screen.dart';
 import 'package:soda_bar/provider/ui_provider/home_provider.dart';
 import 'package:soda_bar/provider/ui_provider/theme_provider.dart';
 import 'package:soda_bar/utils/custom_theme.dart';
@@ -48,7 +51,7 @@ class MyApp extends StatelessWidget {
       themeMode: themeProvider.themeMode,
       darkTheme: CustomTheme.darkTheme,
 
-      home: HomeScreen(),
+      home: ProfileScreen(),
 
       debugShowCheckedModeBanner: false,
     );

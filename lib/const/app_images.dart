@@ -4,6 +4,8 @@ class AppImages {
   static String sodaBottleImage = "assets/images/soda_bottle.png";
   static String dashboardtext = "assets/images/dashboard_text.png";
   static String googleImage = "assets/images/google.png";
+  static String detailsImage = "assets/images/details.png";
+  static String avatarImage = "assets/images/avatar.png";
 
   ///  logos path
   static String logo_1 = "assets/logos/1_pack.png";

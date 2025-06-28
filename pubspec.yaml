@@ -55,7 +55,7 @@ dependencies:
 
 #navie splash design
 flutter_native_splash:
-  color: "#1AA8DF"
+  color: "#000000"
   image: assets/images/native.png
   color_dark: "#000000"
   image_dark: assets/images/native.png

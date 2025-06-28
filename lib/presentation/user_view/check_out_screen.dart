@@ -29,10 +29,105 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               ),
               SizedBox(height: 20.h),
 
-              ///
+              /// table selection here
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  /// table 1
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color.fromARGB(255, 181, 210, 214),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 20.w,
+                          vertical: 10,
+                        ),
+                        child: Column(
+                          children: [
+                            Text(
+                              '1',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                            Image.asset(AppImages.chairs, height: 60),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  /// table 2
+                  GestureDetector(
+                    onTap: () {},
+
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color.fromARGB(255, 240, 239, 239),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 20.w,
+                          vertical: 10,
+                        ),
+                        child: Column(
+                          children: [
+                            Text(
+                              '2',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                            Image.asset(AppImages.chairs, height: 60),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  /// table 3
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color.fromARGB(255, 240, 239, 239),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 20.w,
+                          vertical: 10,
+                        ),
+                        child: Column(
+                          children: [
+                            Text(
+                              '3',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                            Image.asset(AppImages.chairs, height: 60),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20.h),
+
+              /// order summary here
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.whiteColor,
+                  color: const Color.fromARGB(255, 241, 241, 241),
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Padding(
