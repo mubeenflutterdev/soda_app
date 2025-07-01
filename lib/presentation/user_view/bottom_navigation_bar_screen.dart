@@ -9,6 +9,9 @@ import 'package:soda_bar/presentation/user_view/cart_screen.dart';
 import 'package:soda_bar/presentation/user_view/check_out_screen.dart';
 import 'package:soda_bar/presentation/user_view/details_screen.dart';
 import 'package:soda_bar/presentation/user_view/home_screen.dart';
+import 'package:soda_bar/presentation/user_view/notification_details_screen.dart';
+import 'package:soda_bar/presentation/user_view/notification_screen.dart';
+import 'package:soda_bar/presentation/user_view/order_screen.dart';
 import 'package:soda_bar/presentation/user_view/profile_screen.dart';
 import 'package:soda_bar/provider/ui_provider/bottom_bar_provider.dart';
 
@@ -26,7 +29,7 @@ class _BottomnavigationbarscreenState extends State<Bottomnavigationbarscreen> {
     final provider = Provider.of<BottomBarProvider>(context);
     List screens = [
       HomeScreen(),
-      DetailsScreen(),
+      CartScreen(),
       CheckOutScreen(),
       CartScreen(),
       ProfileScreen(),

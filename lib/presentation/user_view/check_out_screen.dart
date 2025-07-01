@@ -16,6 +16,7 @@ class CheckOutScreen extends StatefulWidget {
 class _CheckOutScreenState extends State<CheckOutScreen> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     ImagePickerProvider imagePickerProvider = Provider.of<ImagePickerProvider>(
       context,
     );
@@ -253,12 +254,67 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text('Please Upload Payment Screenshot'),
+                              Text(
+                                'Payment Screenshot',
+                                style: theme.textTheme.titleMedium!.copyWith(
+                                  fontSize: 25,
+                                ),
+                              ),
 
                               GestureDetector(
                                 onTap: () {
-                                  imagePickerProvider.pickerFromGallery(
-                                    context,
+                                  showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      return Container(
+                                        width: double.infinity,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                imagePickerProvider
+                                                    .pickerFromCamera(context);
+                                              },
+                                              style: ButtonStyle(
+                                                backgroundColor:
+                                                    WidgetStateProperty.all(
+                                                      AppColors.blackColor,
+                                                    ),
+                                              ),
+
+                                              child: Text(
+                                                'Open camera',
+                                                style: TextStyle(
+                                                  color: AppColors.whiteColor,
+                                                ),
+                                              ),
+                                            ),
+
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                imagePickerProvider
+                                                    .pickerFromGallery(context);
+                                              },
+                                              style: ButtonStyle(
+                                                backgroundColor:
+                                                    WidgetStateProperty.all(
+                                                      AppColors.blackColor,
+                                                    ),
+                                              ),
+
+                                              child: Text(
+                                                'Open Gallery',
+                                                style: TextStyle(
+                                                  color: AppColors.whiteColor,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
                                   );
                                 },
                                 child: Container(
@@ -281,7 +337,9 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     ElevatedButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
                                       style: ButtonStyle(
                                         backgroundColor:
                                             WidgetStateProperty.all(
@@ -302,7 +360,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                       style: ButtonStyle(
                                         backgroundColor:
                                             WidgetStateProperty.all(
-                                              AppColors.blackColor,
+                                              AppColors.buttonBackGround,
                                             ),
                                       ),
 

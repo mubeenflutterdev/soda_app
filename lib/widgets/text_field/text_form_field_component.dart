@@ -7,7 +7,7 @@ class TextFormFieldComponent extends StatefulWidget {
   final String text;
   final double contentPaddingWidth;
   final double contentPaddingHeiht;
-
+  final String? Function(String?)? validator;
   double radius;
   IconData? sufficIcon;
 
@@ -21,6 +21,7 @@ class TextFormFieldComponent extends StatefulWidget {
     required this.controler,
     this.radius = 2,
     this.sufficIcon,
+    this.validator,
   });
 
   @override
@@ -36,6 +37,7 @@ class _TextInputFieldComponentState extends State<TextFormFieldComponent> {
         horizontal: widget.contentPaddingWidth * 0.05,
       ),
       child: TextFormField(
+        validator: widget.validator,
         controller: widget.controler,
         decoration: InputDecoration(
           /// suffix here

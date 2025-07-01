@@ -1,17 +1,22 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:soda_bar/firebase_options.dart';
 import 'package:soda_bar/presentation/auth_view/onboarding_screen.dart';
+import 'package:soda_bar/presentation/auth_view/sign_in_screen.dart';
 import 'package:soda_bar/presentation/auth_view/splash_screen.dart';
 import 'package:soda_bar/presentation/user_view/bottom_navigation_bar_screen.dart';
 import 'package:soda_bar/presentation/user_view/check_out_screen.dart';
 import 'package:soda_bar/presentation/user_view/details_screen.dart';
 import 'package:soda_bar/presentation/user_view/home_screen.dart';
 import 'package:soda_bar/presentation/user_view/profile_screen.dart';
+import 'package:soda_bar/provider/feature_provider/auth_provider.dart';
 import 'package:soda_bar/provider/feature_provider/cart_provider.dart';
+import 'package:soda_bar/provider/feature_provider/order_provider.dart';
 import 'package:soda_bar/provider/ui_provider/bottom_bar_provider.dart';
 import 'package:soda_bar/provider/ui_provider/home_provider.dart';
 import 'package:soda_bar/provider/feature_provider/notification_provider.dart';
@@ -22,7 +27,7 @@ import 'package:soda_bar/utils/custom_theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(
     MultiProvider(
@@ -33,6 +38,8 @@ void main() async {
         ChangeNotifierProvider(create: (_) => NotificationProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
         ChangeNotifierProvider(create: (_) => ImagePickerProvider()),
+        ChangeNotifierProvider(create: (_) => OrderProvider()),
+        ChangeNotifierProvider(create: (_) => AuthentactionProvider()),
       ],
 
       /// for using screenUtils package
@@ -58,8 +65,8 @@ class MyApp extends StatelessWidget {
       theme: CustomTheme.lightTheme,
       themeMode: themeProvider.themeMode,
       darkTheme: CustomTheme.darkTheme,
-   
-      home: Bottomnavigationbarscreen(),
+
+      home: SignInScreen(),
 
       debugShowCheckedModeBanner: false,
     );

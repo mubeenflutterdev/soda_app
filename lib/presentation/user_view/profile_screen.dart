@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:soda_bar/const/app_colors.dart';
@@ -61,24 +62,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ListTile(
               title: Text('Profile'),
               leading: Icon(AppIcons.profile),
-              trailing: Icon(AppIcons.righttrrow),
+              trailing: Icon(Icons.arrow_forward),
             ),
             SizedBox(height: 20),
             ListTile(
               title: Text('Contacts'),
-              leading: Icon(AppIcons.profile),
-              trailing: Icon(AppIcons.righttrrow),
+              leading: Icon(Icons.email_outlined),
+              trailing: Icon(Icons.arrow_forward),
             ),
             ListTile(
               title: Text('Share app'),
-              leading: Icon(AppIcons.profile),
-              trailing: Icon(AppIcons.righttrrow),
+              leading: Icon(Icons.share),
+              trailing: Icon(Icons.arrow_forward),
             ),
             SizedBox(height: 20),
             ListTile(
               title: Text('Help'),
-              leading: Icon(AppIcons.profile),
-              trailing: Icon(AppIcons.righttrrow),
+              leading: Icon(
+                CupertinoIcons.question_circle,
+                color: AppColors.blackColor,
+              ),
+              trailing: Icon(Icons.arrow_forward),
             ),
             SizedBox(height: 20),
 
@@ -95,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Icon(
-                        Icons.question_mark_rounded,
+                        CupertinoIcons.question_circle,
                         color: AppColors.whiteColor,
                       ),
                     ),

@@ -49,7 +49,10 @@ class CartComponent extends StatelessWidget {
                         ),
                         Text(
                           cartProvider.cartList[0]['price'],
-                          style: TextStyle(color: Colors.red),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: const Color.fromARGB(255, 255, 255, 255),
+                          ),
                         ),
                       ],
                     ),
@@ -59,7 +62,7 @@ class CartComponent extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         // crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.delete),
+                          Icon(Icons.delete, color: Colors.red),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
