@@ -50,6 +50,8 @@ dependencies:
   flutter_native_splash: ^2.4.6
   smooth_page_indicator: ^1.2.1
   google_fonts: ^6.2.1
+  curved_navigation_bar: ^1.0.6
+  
 
 
 

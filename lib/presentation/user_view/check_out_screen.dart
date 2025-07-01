@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:soda_bar/const/app_colors.dart';
 import 'package:soda_bar/const/app_images.dart';
+import 'package:soda_bar/provider/ui_provider/image_picker_provider.dart';
 import 'package:soda_bar/widgets/buttons/button_component.dart';
 
 class CheckOutScreen extends StatefulWidget {
@@ -14,6 +16,9 @@ class CheckOutScreen extends StatefulWidget {
 class _CheckOutScreenState extends State<CheckOutScreen> {
   @override
   Widget build(BuildContext context) {
+    ImagePickerProvider imagePickerProvider = Provider.of<ImagePickerProvider>(
+      context,
+    );
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.only(left: 20.w, right: 10.w),
@@ -230,7 +235,176 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               ),
               SizedBox(height: 10.h),
 
-              ButtonComponent(text: 'Confirm', borderRadius: 5.r, ontap: () {}),
+              ButtonComponent(
+                text: 'Confirm',
+                borderRadius: 5.r,
+                ontap: () {
+                  ///////// payment screenshot
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        backgroundColor: Colors.white,
+                        child: Container(
+                          height:
+                              MediaQuery.of(context).size.height *
+                              0.5, // Half screen height
+                          padding: EdgeInsets.all(16),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text('Please Upload Payment Screenshot'),
+
+                              GestureDetector(
+                                onTap: () {
+                                  imagePickerProvider.pickerFromGallery(
+                                    context,
+                                  );
+                                },
+                                child: Container(
+                                  height: 200.h,
+                                  width: 250.w,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.greyColor.withValues(
+                                      alpha: .6,
+                                    ),
+                                  ),
+
+                                  child: Center(
+                                    child: Image.asset(AppImages.QrImage),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(right: 20.w),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {},
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            WidgetStateProperty.all(
+                                              AppColors.blackColor,
+                                            ),
+                                      ),
+
+                                      child: Text(
+                                        'Cancle',
+                                        style: TextStyle(
+                                          color: AppColors.whiteColor,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 10),
+                                    ElevatedButton(
+                                      onPressed: () {},
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            WidgetStateProperty.all(
+                                              AppColors.blackColor,
+                                            ),
+                                      ),
+
+                                      child: Text(
+                                        'Submit',
+                                        style: TextStyle(
+                                          color: AppColors.whiteColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+
+                  /////////////////////////////////////////////////////////
+                  // showModalBottomSheet(
+                  //   context: context,
+                  //   builder: (context) {
+                  //     return Container(
+                  //       width: double.infinity,
+                  //       child: Padding(
+                  //         padding: EdgeInsets.symmetric(vertical: 20.h),
+                  //         child: Column(
+                  //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //           children: [
+                  //             Text('Please Upload Payment Screenshot'),
+
+                  //             GestureDetector(
+                  //               onTap: () {
+                  //                 imagePickerProvider.pickerFromGallery(
+                  //                   context,
+                  //                 );
+                  //               },
+                  //               child: Container(
+                  //                 height: 200.h,
+                  //                 width: 250.w,
+                  //                 decoration: BoxDecoration(
+                  //                   color: AppColors.greyColor.withValues(
+                  //                     alpha: .6,
+                  //                   ),
+                  //                 ),
+
+                  //                 child: Center(
+                  //                   child: Image.asset(AppImages.QrImage),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //             Padding(
+                  //               padding: EdgeInsets.only(right: 20.w),
+                  //               child: Row(
+                  //                 mainAxisAlignment: MainAxisAlignment.end,
+                  //                 children: [
+                  //                   ElevatedButton(
+                  //                     onPressed: () {},
+                  //                     style: ButtonStyle(
+                  //                       backgroundColor:
+                  //                           WidgetStateProperty.all(
+                  //                             AppColors.blackColor,
+                  //                           ),
+                  //                     ),
+
+                  //                     child: Text(
+                  //                       'Cancle',
+                  //                       style: TextStyle(
+                  //                         color: AppColors.whiteColor,
+                  //                       ),
+                  //                     ),
+                  //                   ),
+                  //                   SizedBox(width: 10),
+                  //                   ElevatedButton(
+                  //                     onPressed: () {},
+                  //                     style: ButtonStyle(
+                  //                       backgroundColor:
+                  //                           WidgetStateProperty.all(
+                  //                             AppColors.blackColor,
+                  //                           ),
+                  //                     ),
+
+                  //                     child: Text(
+                  //                       'Submit',
+                  //                       style: TextStyle(
+                  //                         color: AppColors.whiteColor,
+                  //                       ),
+                  //                     ),
+                  //                   ),
+                  //                 ],
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     );
+                  //   },
+                  // );
+                },
+              ),
               SizedBox(height: 10.h),
             ],
           ),

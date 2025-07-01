@@ -6,6 +6,7 @@ class AppImages {
   static String googleImage = "assets/images/google.png";
   static String detailsImage = "assets/images/details.png";
   static String avatarImage = "assets/images/avatar.png";
+  static String QrImage = "assets/images/qr.png";
 
   ///  logos path
   static String logo_1 = "assets/logos/1_pack.png";

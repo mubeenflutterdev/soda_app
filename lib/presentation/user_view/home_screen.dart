@@ -76,16 +76,23 @@ class _HomeScreenState extends State<HomeScreen> {
               child: SizedBox(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10.w),
-                  child: ListView.builder(
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: .656,
+                    ),
                     // scrollDirection: Axis.horizontal,
                     // padding: EdgeInsets.symmetric(horizontal: 10),
                     itemCount: 10,
 
                     itemBuilder: (context, index) {
-                      return ProductDasboard(
-                        img: AppImages.smallSoda,
-                        name: "Soda",
-                        price: 340,
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ProductDasboard(
+                          img: AppImages.smallSoda,
+                          name: "Soda",
+                          price: 340,
+                        ),
                       );
                     },
                   ),
@@ -302,7 +309,7 @@ class ProductDasboard extends StatelessWidget {
       padding: EdgeInsets.only(top: 10.h),
       child: Container(
         // width: 10.w,
-        height: 400,
+        // height: 400,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.r),
           gradient: LinearGradient(
@@ -322,7 +329,7 @@ class ProductDasboard extends StatelessWidget {
           children: [
             Center(child: Image.asset(img, height: 150)),
             Padding(
-              padding: EdgeInsets.only(left: 10.w, top: 5.h),
+              padding: EdgeInsets.only(left: 10.w),
               child: Text(
                 "All New",
                 style: TextStyle(color: AppColors.blackColor),
@@ -330,7 +337,7 @@ class ProductDasboard extends StatelessWidget {
             ),
 
             Padding(
-              padding: EdgeInsets.only(top: 6.h, left: 10.w),
+              padding: EdgeInsets.only(left: 10.w),
               child: Text(
                 name,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19.sp),

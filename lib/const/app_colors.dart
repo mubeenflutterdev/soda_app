@@ -8,4 +8,5 @@ class AppColors {
   static final Color greenColor = Colors.green;
   static final Color dashBoardBackGroundColor = Colors.green;
   static final Color green = Color(0xffF0DB295);
+  static final Color greyColor = Colors.grey;
 }
