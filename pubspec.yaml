@@ -51,21 +51,22 @@ dependencies:
   smooth_page_indicator: ^1.2.1
   google_fonts: ^6.2.1
   curved_navigation_bar: ^1.0.6
+  google_sign_in: ^6.2.1
   
 
 
 
 #navie splash design
 flutter_native_splash:
-  color: "#000000"
-  image: assets/images/native.png
-  color_dark: "#000000"
-  image_dark: assets/images/native.png
+  color: "#1A1A1A"
+  image: assets/images/native.jpg
+  color_dark: "#1A1A1A"
+  image_dark: assets/images/native.jpg
   android_12:
-    image: assets/images/native.png
-    icon_background_color: "#000000"
-    image_dark: assets/images/native.png
-    icon_background_color_dark: "#000000"
+    image: assets/images/native.jpg
+    icon_background_color: "#1A1A1A"
+    image_dark: assets/images/native.jpg
+    icon_background_color_dark: "#1A1A1A"
   web: false
 
 dev_dependencies:

@@ -7,12 +7,12 @@ import 'package:soda_bar/const/app_colors.dart';
 import 'package:soda_bar/const/app_images.dart';
 import 'package:soda_bar/presentation/user_view/cart_screen.dart';
 import 'package:soda_bar/presentation/user_view/check_out_screen.dart';
-import 'package:soda_bar/presentation/user_view/details_screen.dart';
+
 import 'package:soda_bar/presentation/user_view/home_screen.dart';
-import 'package:soda_bar/presentation/user_view/notification_details_screen.dart';
 import 'package:soda_bar/presentation/user_view/notification_screen.dart';
-import 'package:soda_bar/presentation/user_view/order_screen.dart';
+
 import 'package:soda_bar/presentation/user_view/profile_screen.dart';
+import 'package:soda_bar/provider/feature_provider/user_info_provider.dart';
 import 'package:soda_bar/provider/ui_provider/bottom_bar_provider.dart';
 
 class Bottomnavigationbarscreen extends StatefulWidget {
@@ -25,12 +25,25 @@ class Bottomnavigationbarscreen extends StatefulWidget {
 
 class _BottomnavigationbarscreenState extends State<Bottomnavigationbarscreen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final userInfoProvider = Provider.of<UserInfoProvider>(
+      context,
+      listen: false,
+    );
+    userInfoProvider.getUserInfo(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final userInfoProvider = Provider.of<UserInfoProvider>(context);
+
     final provider = Provider.of<BottomBarProvider>(context);
     List screens = [
       HomeScreen(),
       CartScreen(),
-      CheckOutScreen(),
+      NotificationScreen(),
       CartScreen(),
       ProfileScreen(),
     ];
@@ -50,7 +63,7 @@ class _BottomnavigationbarscreenState extends State<Bottomnavigationbarscreen> {
         },
         items: [
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(8.0),
             child: Icon(FontAwesomeIcons.home, color: AppColors.blackColor),
           ),
           Padding(
@@ -65,13 +78,18 @@ class _BottomnavigationbarscreenState extends State<Bottomnavigationbarscreen> {
             child: Icon(FontAwesomeIcons.solidBookmark, color: Colors.white),
           ),
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(10),
             child: Icon(FontAwesomeIcons.bell, color: Colors.white, size: 30),
           ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Image.asset(AppImages.avatarImage, width: 50, height: 50),
-          ),
+
+          userInfoProvider.userInfo == null
+              ? CircularProgressIndicator()
+              : CircleAvatar(
+                  radius: 20,
+                  backgroundImage: NetworkImage(
+                    userInfoProvider.userInfo!.profileImage,
+                  ),
+                ),
         ],
       ),
     );

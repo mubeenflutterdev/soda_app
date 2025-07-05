@@ -12,7 +12,20 @@
           "package_name": "com.example.soda_bar"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "586143236644-q0b9eesmhcl0b4duetjf7evenlrf7i30.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.soda_bar",
+            "certificate_hash": "2583d3c49a35fcd718eef41d0f95009d5014a4c6"
+          }
+        },
+        {
+          "client_id": "586143236644-vnn83357afhnkh4nmld7jgh07ffac1cr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCzskA7Qev-kY6b_HIi9hL23M4bBqeKnT8"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "586143236644-vnn83357afhnkh4nmld7jgh07ffac1cr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

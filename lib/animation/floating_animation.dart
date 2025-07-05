@@ -20,7 +20,7 @@ class _FloatingAnimationState extends State<FloatingAnimation>
     controller =
         AnimationController(
           vsync: this,
-          duration: const Duration(seconds: 3),
+          duration: const Duration(seconds: 5),
           reverseDuration: const Duration(milliseconds: 2300),
         )..addStatusListener((AnimationStatus status) {
           if (status == AnimationStatus.completed) controller.reverse();

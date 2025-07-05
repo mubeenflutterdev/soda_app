@@ -2,10 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
+
 import 'package:soda_bar/const/app_colors.dart';
 import 'package:soda_bar/const/app_images.dart';
-import 'package:soda_bar/provider/ui_provider/home_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,68 +14,82 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   FirebaseAuth.instance.signOut();
+  // }
+
   @override
   Widget build(BuildContext context) {
-    HomeProvider homeProvider = context.read<HomeProvider>();
+    // HomeProvider homeProvider = context.read<HomeProvider>();
 
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          // mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            DashBoardComponent(),
-            SizedBox(height: 30.h),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              ////
-              child: Row(
-                children: [
-                  SizedBox(width: 20.w),
+        body: SingleChildScrollView(
+          // scrollDirection: Axis.vertical,
+          physics: BouncingScrollPhysics(),
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              DashBoardComponent(),
+              SizedBox(height: 30.h),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                ////
+                child: Row(
+                  children: [
+                    SizedBox(width: 20.w),
 
-                  CategroiesComponent(
-                    isTap: true,
-                    image: AppImages.logo_1,
-                    text: '1 Pack',
-                    ontap: () {
-                      setState(() {});
-                    },
-                  ),
-                  SizedBox(width: 20.w),
-                  CategroiesComponent(
-                    isTap: false,
-                    image: AppImages.logo_2,
-                    text: '2 Pack',
-                    ontap: () {
-                      setState(() {});
-                    },
-                  ),
-                  SizedBox(width: 20.w),
+                    CategroiesComponent(
+                      isTap: true,
+                      image: AppImages.logo_1,
+                      text: '1 Pack',
+                      ontap: () {
+                        setState(() {});
+                      },
+                    ),
+                    SizedBox(width: 20.w),
+                    CategroiesComponent(
+                      isTap: false,
+                      image: AppImages.logo_2,
+                      text: '2 Pack',
+                      ontap: () {
+                        setState(() {});
+                      },
+                    ),
+                    SizedBox(width: 20.w),
 
-                  CategroiesComponent(
-                    isTap: false,
-                    image: AppImages.logo_4,
-                    text: '4 Pack',
-                    ontap: () {
-                      setState(() {});
-                    },
+                    CategroiesComponent(
+                      isTap: false,
+                      image: AppImages.logo_4,
+                      text: '4 Pack',
+                      ontap: () {
+                        setState(() {});
+                      },
+                    ),
+                    SizedBox(width: 20.w),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 20.h, left: 20.w, bottom: 10.h),
+                child: Text(
+                  'All Flavours',
+                  style: TextStyle(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.bold,
                   ),
-                  SizedBox(width: 20.w),
-                ],
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 20.h, left: 20.w, bottom: 10.h),
-              child: Text(
-                'All Flavours',
-                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Expanded(
-              child: SizedBox(
+              SizedBox(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10.w),
                   child: GridView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       childAspectRatio: .656,
@@ -98,8 +111,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

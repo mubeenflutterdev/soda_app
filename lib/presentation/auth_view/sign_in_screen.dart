@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:soda_bar/const/app_colors.dart';
 import 'package:soda_bar/presentation/auth_view/forget_password_screen.dart';
 import 'package:soda_bar/presentation/auth_view/sign_up_screen.dart';
+import 'package:soda_bar/presentation/user_view/bottom_navigation_bar_screen.dart';
 import 'package:soda_bar/provider/feature_provider/auth_provider.dart';
 import 'package:soda_bar/widgets/buttons/button_component.dart';
 import 'package:soda_bar/widgets/buttons/google_button_component.dart';
@@ -102,11 +103,11 @@ class _SignInScreenState extends State<SignInScreen> {
                 height: 60.h,
                 text: 'Sign In',
                 borderRadius: 9.r,
-                ontap: () {
+                ontap: () async {
                   if (_formKey.currentState!.validate()) {
                     String email = emailControler.text.trim();
                     String password = passwordControler.text.trim();
-                    signInProvider.signInUser(email, password, context);
+                    await signInProvider.signInUser(email, password, context);
                   }
                 },
               ),

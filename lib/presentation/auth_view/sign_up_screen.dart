@@ -5,7 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:soda_bar/const/app_colors.dart';
 import 'package:soda_bar/presentation/auth_view/forget_password_screen.dart';
 import 'package:soda_bar/presentation/auth_view/sign_in_screen.dart';
+import 'package:soda_bar/presentation/user_view/bottom_navigation_bar_screen.dart';
+import 'package:soda_bar/presentation/user_view/home_screen.dart';
 import 'package:soda_bar/provider/feature_provider/auth_provider.dart';
+import 'package:soda_bar/provider/feature_provider/user_info_provider.dart';
 
 import 'package:soda_bar/widgets/buttons/button_component.dart';
 import 'package:soda_bar/widgets/buttons/google_button_component.dart';
@@ -28,6 +31,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final signUpProvider = Provider.of<AuthentactionProvider>(context);
+    final userInfoProvider = Provider.of<UserInfoProvider>(context);
 
     return Scaffold(
       body: Padding(
@@ -111,25 +115,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 radius: 9.r,
                 sufficIcon: Icons.visibility_off,
               ),
+              SizedBox(height: 20.h),
 
+              ButtonComponent(
+                text: 'Upload Profile Image',
+                borderRadius: 20,
+                ontap: () {},
+              ),
               SizedBox(height: 20.h),
               ButtonComponent(
                 height: 60.h,
                 text: 'SIGN UP',
                 borderRadius: 9.r,
-                ontap: () {
+                ontap: () async {
                   String email = emailControler.text.trim();
                   String password = passwordControler.text.trim();
+                  String name = nameControler.text.trim();
                   if (_formKey.currentState!.validate()) {
-                    String email = emailControler.text.trim();
-                    String password = passwordControler.text.trim();
-                    signUpProvider.signUpUser(email, password, context);
+                    await signUpProvider.signUpUser(
+                      name,
+                      email,
+                      password,
+                      context,
+                    );
+
+                    // userInfoProvider.addUserInfo(name, email, context,);
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => Bottomnavigationbarscreen(),
+                    //   ),
+                    // );
                   }
 
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => SignUpScreen()),
-                  // );
+                  // signUpProvider.signUpUser(email, password, context);
                 },
               ),
               Padding(

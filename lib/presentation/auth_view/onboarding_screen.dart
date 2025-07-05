@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:soda_bar/const/app_colors.dart';
 import 'package:soda_bar/const/app_images.dart';
 
 import 'package:soda_bar/presentation/auth_view/sign_in_screen.dart';
+import 'package:soda_bar/provider/ui_provider/onboarding_provider.dart';
 import 'package:soda_bar/utils/custom_theme.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -20,6 +22,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<OnboardingProvider>(context);
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -158,12 +161,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     padding: EdgeInsets.only(right: 20.w, top: 0),
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SignInScreen(),
-                          ),
-                        );
+                        provider.setOnboardingSeen(context);
                       },
                       child: Stack(
                         children: [
