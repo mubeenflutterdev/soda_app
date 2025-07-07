@@ -184,7 +184,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               child: Padding(
                                 padding: EdgeInsets.only(left: 70.w),
                                 child: Icon(
-                                  Icons.add_ic_call_outlined,
+                                  Icons.keyboard_double_arrow_right_rounded,
                                   size: 16.h,
                                   color: AppColors.whiteColor,
                                 ),

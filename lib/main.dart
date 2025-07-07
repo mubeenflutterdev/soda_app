@@ -18,10 +18,12 @@ import 'package:soda_bar/provider/feature_provider/order_provider.dart';
 import 'package:soda_bar/provider/feature_provider/user_info_provider.dart';
 import 'package:soda_bar/provider/ui_provider/bottom_bar_provider.dart';
 import 'package:soda_bar/provider/feature_provider/notification_provider.dart';
+import 'package:soda_bar/provider/ui_provider/home_provider.dart';
 import 'package:soda_bar/provider/ui_provider/image_picker_provider.dart';
 import 'package:soda_bar/provider/ui_provider/onboarding_provider.dart';
 import 'package:soda_bar/provider/ui_provider/theme_provider.dart';
 import 'package:soda_bar/utils/custom_theme.dart';
+import 'package:soda_bar/widgets/shimmer/shimmer_box.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +33,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        // ChangeNotifierProvider(create: (_) => HomeProvider()),
+        ChangeNotifierProvider(create: (_) => HomeProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => BottomBarProvider()),
         ChangeNotifierProvider(create: (_) => NotificationProvider()),
@@ -42,7 +44,6 @@ void main() async {
         ChangeNotifierProvider(create: (_) => OnboardingProvider()),
         ChangeNotifierProvider(create: (_) => UserInfoProvider()),
         ChangeNotifierProvider(create: (_) => CategoriesProvider()),
-
       ],
 
       /// for using screenUtils package

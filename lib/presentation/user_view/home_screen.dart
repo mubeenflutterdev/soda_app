@@ -2,9 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 import 'package:soda_bar/const/app_colors.dart';
 import 'package:soda_bar/const/app_images.dart';
+import 'package:soda_bar/provider/feature_provider/categories_provider.dart';
+import 'package:soda_bar/provider/ui_provider/home_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,17 +17,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   FirebaseAuth.instance.signOut();
-  // }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    CategoriesProvider categoriesProvider = Provider.of<CategoriesProvider>(
+      context,
+      listen: false,
+    );
+    categoriesProvider.getCategories(context);
+  }
 
   @override
   Widget build(BuildContext context) {
-    // HomeProvider homeProvider = context.read<HomeProvider>();
-
+    CategoriesProvider categoriesProvider = Provider.of<CategoriesProvider>(
+      context,
+    );
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -38,40 +46,75 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: 30.h),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                ////
-                child: Row(
-                  children: [
-                    SizedBox(width: 20.w),
 
-                    CategroiesComponent(
-                      isTap: true,
-                      image: AppImages.logo_1,
-                      text: '1 Pack',
-                      ontap: () {
-                        setState(() {});
-                      },
-                    ),
-                    SizedBox(width: 20.w),
-                    CategroiesComponent(
-                      isTap: false,
-                      image: AppImages.logo_2,
-                      text: '2 Pack',
-                      ontap: () {
-                        setState(() {});
-                      },
-                    ),
-                    SizedBox(width: 20.w),
+                child: Consumer<CategoriesProvider>(
+                  builder: (context, provider, child) {
+                    if (provider.isLoading) {
+                      return LinearProgressIndicator();
+                    } else if (provider.categoriesList.isEmpty) {
+                      return Text('categories is not availabel');
+                    } else {
+                      return Row(
+                        children: [
+                          SizedBox(width: 20.w),
 
-                    CategroiesComponent(
-                      isTap: false,
-                      image: AppImages.logo_4,
-                      text: '4 Pack',
-                      ontap: () {
-                        setState(() {});
-                      },
-                    ),
-                    SizedBox(width: 20.w),
-                  ],
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {});
+                              print('jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj');
+                            },
+                            child: CategroiesComponent(
+                              isTap: false,
+
+                              text: categoriesProvider.categoriesList != null
+                                  ? categoriesProvider.categoriesList[0].name
+                                  : '',
+                              ontap: () {
+                                setState(() {});
+                              },
+                            ),
+                          ),
+                          SizedBox(width: 20.w),
+                          CategroiesComponent(
+                            isTap: true,
+
+                            text: categoriesProvider.categoriesList != null
+                                ? categoriesProvider.categoriesList[1].name
+                                : '',
+                            ontap: () {
+                              setState(() {});
+                            },
+                          ),
+                          SizedBox(width: 20.w),
+
+                          CategroiesComponent(
+                            isTap: true,
+
+                            text: categoriesProvider.categoriesList != null
+                                ? categoriesProvider.categoriesList[2].name
+                                : '',
+                            ontap: () {
+                              setState(() {});
+                            },
+                          ),
+                          SizedBox(width: 20.w),
+                          SizedBox(width: 20.w),
+
+                          CategroiesComponent(
+                            isTap: true,
+
+                            text: categoriesProvider.categoriesList != null
+                                ? categoriesProvider.categoriesList[3].name
+                                : '',
+                            ontap: () {
+                              setState(() {});
+                            },
+                          ),
+                          SizedBox(width: 20.w),
+                        ],
+                      );
+                    }
+                  },
                 ),
               ),
               Padding(
@@ -261,13 +304,12 @@ class DashBoardComponent extends StatelessWidget {
 
 /// categroies component here
 class CategroiesComponent extends StatefulWidget {
-  String image;
   String text;
   VoidCallback ontap;
   bool isTap = false;
   CategroiesComponent({
     super.key,
-    required this.image,
+
     required this.text,
     required this.ontap,
     required this.isTap,
@@ -280,25 +322,19 @@ class CategroiesComponent extends StatefulWidget {
 class _CategroiesComponentState extends State<CategroiesComponent> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: widget.ontap,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30.r),
-          color: widget.isTap == true
-              ? AppColors.buttonBackGround
-              : AppColors.whiteColor,
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16),
-          child: Row(
-            children: [
-              Image.asset(widget.image),
-              SizedBox(width: 8.w),
-              Text(widget.text),
-            ],
-          ),
-        ),
+    HomeProvider homeProvider = Provider.of<HomeProvider>(context);
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30.r),
+        color: homeProvider.isTap == true
+            ? AppColors.buttonBackGround
+            : AppColors.greyColor,
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16),
+        child:
+            // Image.asset(widget.image),
+            Text(widget.text, style: TextStyle(color: AppColors.whiteColor)),
       ),
     );
   }

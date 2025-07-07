@@ -6,6 +6,7 @@ class CategoriesModel {
   final String quantity;
   final String addedDate;
   final String updatedDate;
+
   CategoriesModel({
     required this.id,
     required this.name,
@@ -35,13 +36,40 @@ class CategoriesModel {
   // Convert Dart object to Firestore map
   Map<String, dynamic> toFirestore() {
     return {
-      'name': name,
       'id': id,
+      'name': name,
       'description': description,
       'image': image,
       'quantity': quantity,
       'addedDate': addedDate,
       'updatedDate': updatedDate,
     };
+  }
+
+  // Debug-friendly string representation
+  @override
+  String toString() {
+    return 'CategoriesModel(id: $id, name: $name, image: $image, quantity: $quantity)';
+  }
+
+  // Optional: copyWith method for immutability
+  CategoriesModel copyWith({
+    String? id,
+    String? name,
+    String? image,
+    String? description,
+    String? quantity,
+    String? addedDate,
+    String? updatedDate,
+  }) {
+    return CategoriesModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      image: image ?? this.image,
+      description: description ?? this.description,
+      quantity: quantity ?? this.quantity,
+      addedDate: addedDate ?? this.addedDate,
+      updatedDate: updatedDate ?? this.updatedDate,
+    );
   }
 }

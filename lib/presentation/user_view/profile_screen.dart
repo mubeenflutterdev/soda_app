@@ -110,8 +110,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(height: 20),
               ListTile(
                 onTap: () async {
-                  categoriesProvider.getCategories(context);
-                  print(categoriesProvider.categoriesList[0].name);
+                  await categoriesProvider.getCategories(context);
+                  if (categoriesProvider.categoriesList != null) {
+                    print(categoriesProvider.categoriesList[0]);
+                  } else {
+                    print(
+                      '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@',
+                    );
+                  }
                 },
                 title: Text('Contacts'),
                 leading: Icon(Icons.email_outlined),

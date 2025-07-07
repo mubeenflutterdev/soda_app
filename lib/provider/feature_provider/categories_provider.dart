@@ -5,10 +5,12 @@ import 'package:soda_bar/utils/toast_utils.dart';
 
 class CategoriesProvider with ChangeNotifier {
   final firebase = FirebaseFirestore.instance;
-  List categoriesList = [];
+  bool isLoading = false;
+  List<CategoriesModel> categoriesList = [];
 
   Future getCategories(BuildContext context) async {
     try {
+      isLoading = true;
       QuerySnapshot snapshot = await firebase.collection('categories').get();
       categoriesList.clear();
       for (var doc in snapshot.docs) {
@@ -21,6 +23,8 @@ class CategoriesProvider with ChangeNotifier {
     } catch (e) {
       print(e.toString());
       ToastUtil.showToast(context, message: e.toString());
+    } finally {
+      isLoading = false;
     }
   }
 }
