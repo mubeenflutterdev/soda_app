@@ -27,35 +27,48 @@ class ProductModel {
     this.size,
   });
 
-  ProductModel.fromJson(Map<String, dynamic> json) {
+  /// ✅ SAFE: Parses even if Firestore returns string instead of double/int
+  ProductModel.fromFirestore(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     image = json['image'];
-    price = json['price'];
+
+    price = json['price'] is double
+        ? json['price']
+        : double.tryParse(json['price'].toString());
+
     flavor = json['flavor'];
-    quantity = json['quantity'];
+
+    quantity = json['quantity'] is int
+        ? json['quantity']
+        : int.tryParse(json['quantity'].toString());
+
     category = json['category'];
     categoryId = json['categoryId'];
-    rating = json['rating'];
+
+    rating = json['rating'] is double
+        ? json['rating']
+        : double.tryParse(json['rating'].toString());
+
     addedDate = json['addedDate'];
     updatedDate = json['updatedDate'];
     size = json['size'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['image'] = this.image;
-    data['price'] = this.price;
-    data['flavor'] = this.flavor;
-    data['quantity'] = this.quantity;
-    data['category'] = this.category;
-    data['categoryId'] = this.categoryId;
-    data['rating'] = this.rating;
-    data['addedDate'] = this.addedDate;
-    data['updatedDate'] = this.updatedDate;
-    data['size'] = this.size;
+  Map<String, dynamic> toFirestore() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['image'] = image;
+    data['price'] = price;
+    data['flavor'] = flavor;
+    data['quantity'] = quantity;
+    data['category'] = category;
+    data['categoryId'] = categoryId;
+    data['rating'] = rating;
+    data['addedDate'] = addedDate;
+    data['updatedDate'] = updatedDate;
+    data['size'] = size;
     return data;
   }
 }

@@ -5,9 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import 'package:soda_bar/const/app_colors.dart';
-import 'package:soda_bar/const/app_images.dart';
+import 'package:soda_bar/models/product_model.dart';
+import 'package:soda_bar/presentation/user_view/details_screen.dart';
 import 'package:soda_bar/provider/feature_provider/categories_provider.dart';
-import 'package:soda_bar/provider/ui_provider/home_provider.dart';
+import 'package:soda_bar/provider/feature_provider/product_provider.dart';
+import 'package:soda_bar/widgets/card/dashboard_component.dart';
+import 'package:soda_bar/widgets/card/product_dashboard_component.dart';
+import 'package:soda_bar/widgets/shimmer/shimmer_box.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,142 +20,136 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+  late TabController _tabController;
+
+  final List<String> _tabs = [
+    'Cola',
+    'Pepsi',
+    'Sprite',
+    '7Up',
+    'RootBeer',
+    'Fanta',
+    'Dew',
+  ];
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    CategoriesProvider categoriesProvider = Provider.of<CategoriesProvider>(
+
+    _tabController = TabController(length: _tabs.length, vsync: this);
+    _tabController.addListener(() {
+      setState(() {});
+    });
+
+    final productProvider = Provider.of<ProductProvider>(
       context,
       listen: false,
     );
-    categoriesProvider.getCategories(context);
+    final categoriesProvider = Provider.of<CategoriesProvider>(
+      context,
+      listen: false,
+    );
+
+    // Fetch only if not already loaded
+    if (productProvider.products.isEmpty) {
+      productProvider.getProducts(context);
+    }
+    if (categoriesProvider.categoriesList.isEmpty) {
+      categoriesProvider.getCategories(context);
+    }
   }
 
   @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  bool get wantKeepAlive => true; // Preserve state
+
+  @override
   Widget build(BuildContext context) {
-    CategoriesProvider categoriesProvider = Provider.of<CategoriesProvider>(
-      context,
-    );
+    super.build(context); // Required when using AutomaticKeepAliveClientMixin
+
+    final productProvider = Provider.of<ProductProvider>(context);
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
-          // scrollDirection: Axis.vertical,
           physics: BouncingScrollPhysics(),
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              /// Top Section
               DashBoardComponent(),
-              SizedBox(height: 30.h),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
+              SizedBox(height: 20.h),
 
-                child: Consumer<CategoriesProvider>(
-                  builder: (context, provider, child) {
-                    if (provider.isLoading) {
-                      return LinearProgressIndicator();
-                    } else if (provider.categoriesList.isEmpty) {
-                      return Text('categories is not availabel');
-                    } else {
-                      return Row(
-                        children: [
-                          SizedBox(width: 20.w),
-
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {});
-                              print('jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj');
-                            },
-                            child: CategroiesComponent(
-                              isTap: false,
-
-                              text: categoriesProvider.categoriesList != null
-                                  ? categoriesProvider.categoriesList[0].name
-                                  : '',
-                              ontap: () {
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                          SizedBox(width: 20.w),
-                          CategroiesComponent(
-                            isTap: true,
-
-                            text: categoriesProvider.categoriesList != null
-                                ? categoriesProvider.categoriesList[1].name
-                                : '',
-                            ontap: () {
-                              setState(() {});
-                            },
-                          ),
-                          SizedBox(width: 20.w),
-
-                          CategroiesComponent(
-                            isTap: true,
-
-                            text: categoriesProvider.categoriesList != null
-                                ? categoriesProvider.categoriesList[2].name
-                                : '',
-                            ontap: () {
-                              setState(() {});
-                            },
-                          ),
-                          SizedBox(width: 20.w),
-                          SizedBox(width: 20.w),
-
-                          CategroiesComponent(
-                            isTap: true,
-
-                            text: categoriesProvider.categoriesList != null
-                                ? categoriesProvider.categoriesList[3].name
-                                : '',
-                            ontap: () {
-                              setState(() {});
-                            },
-                          ),
-                          SizedBox(width: 20.w),
-                        ],
-                      );
-                    }
-                  },
-                ),
-              ),
               Padding(
-                padding: EdgeInsets.only(top: 20.h, left: 20.w, bottom: 10.h),
+                padding: EdgeInsets.only(left: 20.w),
                 child: Text(
-                  'All Flavours',
+                  "All Flavours",
                   style: TextStyle(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              SizedBox(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w),
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: .656,
-                    ),
-                    // scrollDirection: Axis.horizontal,
-                    // padding: EdgeInsets.symmetric(horizontal: 10),
-                    itemCount: 10,
+              SizedBox(height: 10.h),
 
-                    itemBuilder: (context, index) {
+              /// Scrollable Custom Tab Bar
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: List.generate(_tabs.length, (index) {
+                      final isSelected = _tabController.index == index;
                       return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ProductDasboard(
-                          img: AppImages.smallSoda,
-                          name: "Soda",
-                          price: 340,
+                        padding: EdgeInsets.only(right: 8.w),
+                        child: GestureDetector(
+                          onTap: () {
+                            _tabController.animateTo(index);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16.w,
+                              vertical: 10.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? AppColors.buttonBackGround
+                                  : AppColors.greyColor,
+                              borderRadius: BorderRadius.circular(20.r),
+                            ),
+                            child: Text(
+                              _tabs[index],
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
                         ),
                       );
-                    },
+                    }),
                   ),
+                ),
+              ),
+
+              SizedBox(height: 20.h),
+
+              /// Tab Content Area
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.8,
+                child: TabBarView(
+                  controller: _tabController,
+                  physics: NeverScrollableScrollPhysics(),
+                  children: _tabs.map((tab) {
+                    return _buildTabContent(productProvider, tab);
+                  }).toList(),
                 ),
               ),
             ],
@@ -160,272 +158,54 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-}
 
-/////    dashboard component here
-class DashBoardComponent extends StatelessWidget {
-  const DashBoardComponent({super.key});
+  Widget _buildTabContent(ProductProvider provider, String categoryName) {
+    final List<ProductModel> products = provider.products
+        .where(
+          (product) =>
+              product.category?.toLowerCase() == categoryName.toLowerCase(),
+        )
+        .toList();
 
-  @override
-  Widget build(BuildContext context) {
-    var mediaquery = MediaQuery.of(context).size;
-    double height = mediaquery.height;
-    double width = mediaquery.width;
+    if (provider.isLoading == true) {
+      return Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ShimmerBox(height: 40, width: 60),
+      );
+    } else if (products.isEmpty) {
+      return Center(child: Text('No products found'));
+    }
+
     return Padding(
-      padding: EdgeInsets.only(
-        left: width * 0.05,
-        right: width * 0.05,
-        top: height * 0.04,
-        bottom: height * 0.001,
-      ),
-      child: Container(
-        width: double.infinity,
-        height: height * 0.28,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(width * 0.05),
-          gradient: LinearGradient(
-            colors: [
-              Colors.black,
-              Colors.black,
-              // const Color.fromARGB(255, 158, 238, 127),
-              const Color.fromARGB(255, 45, 53, 52),
-              const Color.fromARGB(255, 36, 219, 195),
-            ],
-          ),
+      padding: EdgeInsets.all(10.w),
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: products.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 0.656,
+          mainAxisSpacing: 10.h,
+          crossAxisSpacing: 10.w,
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              //////////////////////////////////////////////////////////////////////////////
-              padding: EdgeInsets.only(left: width * 0.08),
-              child: Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      // flex: 2,
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            top: height * 0.02,
-
-                            child: Image.asset(AppImages.dashboardtext),
-                          ),
-
-                          /// 1st heading here
-                          Padding(
-                            padding: EdgeInsets.only(top: height * 0.05),
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  // top: height * 0.065,
-                                  child: Text(
-                                    '30% off',
-                                    style: TextStyle(
-                                      fontSize: 20.sp,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColors.whiteColor,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          /// 2nd heading here
-                          Padding(
-                            padding: EdgeInsets.only(top: height * 0.1),
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  // top: 1,
-                                  child: Text(
-                                    'The Eid     \nOffer',
-                                    style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-
-                                      color: AppColors.whiteColor,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          /// buy now button here
-                          Positioned(
-                            top: height * 0.22,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: AppColors.whiteColor,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: width * 0.04,
-                                  vertical: height * 0.01,
-                                ),
-                                child: GestureDetector(
-                                  onTap: () {},
-
-                                  child: Text('Buy Now'),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+        itemBuilder: (context, index) {
+          final product = products[index];
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => DetailsScreen(product: product),
                 ),
-              ),
+              );
+            },
+            child: ProductDasboard(
+              img: product.image ?? '',
+              name: product.name ?? '',
+              price: product.price ?? 0,
             ),
-            // SizedBox(width: 20),
-            Padding(
-              padding: EdgeInsets.only(right: width * 0.06),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ////// soda bottle image here
-                  Image.asset(AppImages.sodaBottleImage, height: 200),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// categroies component here
-class CategroiesComponent extends StatefulWidget {
-  String text;
-  VoidCallback ontap;
-  bool isTap = false;
-  CategroiesComponent({
-    super.key,
-
-    required this.text,
-    required this.ontap,
-    required this.isTap,
-  });
-
-  @override
-  State<CategroiesComponent> createState() => _CategroiesComponentState();
-}
-
-class _CategroiesComponentState extends State<CategroiesComponent> {
-  @override
-  Widget build(BuildContext context) {
-    HomeProvider homeProvider = Provider.of<HomeProvider>(context);
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30.r),
-        color: homeProvider.isTap == true
-            ? AppColors.buttonBackGround
-            : AppColors.greyColor,
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16),
-        child:
-            // Image.asset(widget.image),
-            Text(widget.text, style: TextStyle(color: AppColors.whiteColor)),
-      ),
-    );
-  }
-}
-
-/// product dashboard component
-class ProductDasboard extends StatelessWidget {
-  String img;
-  String name;
-  int price;
-  ProductDasboard({
-    super.key,
-    required this.img,
-    required this.name,
-    required this.price,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: 10.h),
-      child: Container(
-        // width: 10.w,
-        // height: 400,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.r),
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            colors: [
-              const Color.fromARGB(255, 36, 219, 195),
-              const Color.fromARGB(255, 42, 228, 203),
-              // const Color.fromARGB(255, 57, 122, 114),
-              const Color.fromARGB(86, 201, 193, 193),
-
-              // Colors.black,
-            ],
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(child: Image.asset(img, height: 150)),
-            Padding(
-              padding: EdgeInsets.only(left: 10.w),
-              child: Text(
-                "All New",
-                style: TextStyle(color: AppColors.blackColor),
-              ),
-            ),
-
-            Padding(
-              padding: EdgeInsets.only(left: 10.w),
-              child: Text(
-                name,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19.sp),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 10.w),
-                  child: Text(
-                    '\&$price',
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.blackColor,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10.r),
-                      bottomRight: Radius.circular(15.r),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 4.h,
-                      horizontal: 6.w,
-                    ),
-                    child: Icon(Icons.add, color: AppColors.whiteColor),
-                  ),
-                ),
-              ],
-            ),
-            // SizedBox(height: 10.h),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

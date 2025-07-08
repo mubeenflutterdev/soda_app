@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:soda_bar/const/app_colors.dart';
 import 'package:soda_bar/const/app_images.dart';
+import 'package:soda_bar/models/product_model.dart';
 
 class DetailsScreen extends StatefulWidget {
-  const DetailsScreen({super.key});
+  final ProductModel product;
+  const DetailsScreen({super.key, required this.product});
 
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
@@ -39,9 +41,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ),
               ),
               Positioned(
-                left: width * 0.12,
+                left: width * 0.04,
                 bottom: 350.h,
-                child: Image.asset(AppImages.detailsImage),
+                child: Image.asset(AppImages.detailsImage, height: 320.w),
               ),
               Positioned(
                 bottom: height * 0.4,

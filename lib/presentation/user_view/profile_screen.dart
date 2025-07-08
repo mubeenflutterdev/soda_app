@@ -12,7 +12,9 @@ import 'package:soda_bar/presentation/user_view/profile_details_screen.dart';
 
 import 'package:soda_bar/provider/feature_provider/auth_provider.dart';
 import 'package:soda_bar/provider/feature_provider/categories_provider.dart';
+import 'package:soda_bar/provider/feature_provider/product_provider.dart';
 import 'package:soda_bar/provider/feature_provider/user_info_provider.dart';
+import 'package:soda_bar/utils/toast_utils.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -40,6 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final authProvider = Provider.of<AuthentactionProvider>(context);
     final userInfoProvider = Provider.of<UserInfoProvider>(context);
     final categoriesProvider = Provider.of<CategoriesProvider>(context);
+    final productProvider = Provider.of<ProductProvider>(context);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -110,14 +113,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(height: 20),
               ListTile(
                 onTap: () async {
-                  await categoriesProvider.getCategories(context);
-                  if (categoriesProvider.categoriesList != null) {
-                    print(categoriesProvider.categoriesList[0]);
-                  } else {
-                    print(
-                      '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@',
-                    );
-                  }
+               await   productProvider.getProducts(context);
+                  print(productProvider.products[0].name);
+                  // try {
+                  //   await FirebaseFirestore.instance
+                  //       .collection('products')
+                  //       .doc()
+                  //       .set({
+                  //         "id": "soda001",
+                  //         "name": "Coca Cola Classic",
+                  //         "image": "https://example.com/images/coca_cola.png",
+                  //         "price": 1.50,
+                  //         "flavor": "Coca Cola",
+                  //         "quantity": 100,
+                  //         "category": "Cola",
+                  //         "categoryId": "cat001",
+                  //         "rating": 4.8,
+                  //         "addedDate": "2025-07-01T10:30:00Z",
+                  //         "updatedDate": "2025-07-03T14:00:00Z",
+                  //         "size": "500ml",
+                  //       });
+                  // } catch (e) {
+                  //   ToastUtil.showToast(context, message: e.toString());
+                  // }
                 },
                 title: Text('Contacts'),
                 leading: Icon(Icons.email_outlined),

@@ -10,11 +10,13 @@ import 'package:soda_bar/firebase_options.dart';
 import 'package:soda_bar/presentation/auth_view/onboarding_screen.dart';
 import 'package:soda_bar/presentation/auth_view/sign_in_screen.dart';
 import 'package:soda_bar/presentation/user_view/bottom_navigation_bar_screen.dart';
+import 'package:soda_bar/presentation/user_view/profile_screen.dart';
 
 import 'package:soda_bar/provider/feature_provider/auth_provider.dart';
 import 'package:soda_bar/provider/feature_provider/cart_provider.dart';
 import 'package:soda_bar/provider/feature_provider/categories_provider.dart';
 import 'package:soda_bar/provider/feature_provider/order_provider.dart';
+import 'package:soda_bar/provider/feature_provider/product_provider.dart';
 import 'package:soda_bar/provider/feature_provider/user_info_provider.dart';
 import 'package:soda_bar/provider/ui_provider/bottom_bar_provider.dart';
 import 'package:soda_bar/provider/feature_provider/notification_provider.dart';
@@ -44,6 +46,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => OnboardingProvider()),
         ChangeNotifierProvider(create: (_) => UserInfoProvider()),
         ChangeNotifierProvider(create: (_) => CategoriesProvider()),
+        ChangeNotifierProvider(create: (_) => ProductProvider()),
       ],
 
       /// for using screenUtils package
@@ -108,6 +111,7 @@ class _MyAppState extends State<MyApp> {
           ? SignInScreen()
           : OnboardingScreen(),
 
+      
       debugShowCheckedModeBanner: false,
     );
   }
