@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:soda_bar/const/app_colors.dart';
 import 'package:soda_bar/presentation/auth_view/forget_password_screen.dart';
 import 'package:soda_bar/presentation/auth_view/sign_up_screen.dart';
-import 'package:soda_bar/presentation/user_view/bottom_navigation_bar_screen.dart';
+
 import 'package:soda_bar/provider/feature_provider/auth_provider.dart';
 import 'package:soda_bar/widgets/buttons/button_component.dart';
 import 'package:soda_bar/widgets/buttons/google_button_component.dart';
@@ -78,7 +78,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
 
               Padding(
-                padding: EdgeInsets.only(left: 180.w, top: 10.h, bottom: 10.h),
+                padding: EdgeInsets.only(left: 160.w, top: 10.h, bottom: 10.h),
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -92,7 +92,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     'Forget Password ?',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 14.sp,
+                      fontSize: 12.sp,
                       color: AppColors.buttonBackGround,
                     ),
                   ),

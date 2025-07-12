@@ -1,3 +1,5 @@
+// ignore_for_file: unreachable_switch_default
+
 import 'package:flutter/material.dart';
 enum ToastType { success, error, warning, info }
 class ToastUtil {

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables
+
 import 'package:flutter/material.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:soda_bar/const/app_colors.dart';
@@ -17,7 +19,7 @@ class ShimmerBox extends StatelessWidget {
       child: Container(
         height: height,
         width: width,
-        padding: EdgeInsetsDirectional.all(10),
+        // padding: EdgeInsetsDirectional.all(10),
 
         decoration: BoxDecoration(
           color: AppColors.blackColor.withValues(alpha: 0.1),

@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -249,7 +251,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                         child: Container(
                           height:
                               MediaQuery.of(context).size.height *
-                              0.5, // Half screen height
+                              0.6, // Half screen height
                           padding: EdgeInsets.all(16),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -257,7 +259,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               Text(
                                 'Payment Screenshot',
                                 style: theme.textTheme.titleMedium!.copyWith(
-                                  fontSize: 25,
+                                  fontSize: 20,
                                 ),
                               ),
 
@@ -380,90 +382,9 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       );
                     },
                   );
-
-                  /////////////////////////////////////////////////////////
-                  // showModalBottomSheet(
-                  //   context: context,
-                  //   builder: (context) {
-                  //     return Container(
-                  //       width: double.infinity,
-                  //       child: Padding(
-                  //         padding: EdgeInsets.symmetric(vertical: 20.h),
-                  //         child: Column(
-                  //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //           children: [
-                  //             Text('Please Upload Payment Screenshot'),
-
-                  //             GestureDetector(
-                  //               onTap: () {
-                  //                 imagePickerProvider.pickerFromGallery(
-                  //                   context,
-                  //                 );
-                  //               },
-                  //               child: Container(
-                  //                 height: 200.h,
-                  //                 width: 250.w,
-                  //                 decoration: BoxDecoration(
-                  //                   color: AppColors.greyColor.withValues(
-                  //                     alpha: .6,
-                  //                   ),
-                  //                 ),
-
-                  //                 child: Center(
-                  //                   child: Image.asset(AppImages.QrImage),
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //             Padding(
-                  //               padding: EdgeInsets.only(right: 20.w),
-                  //               child: Row(
-                  //                 mainAxisAlignment: MainAxisAlignment.end,
-                  //                 children: [
-                  //                   ElevatedButton(
-                  //                     onPressed: () {},
-                  //                     style: ButtonStyle(
-                  //                       backgroundColor:
-                  //                           WidgetStateProperty.all(
-                  //                             AppColors.blackColor,
-                  //                           ),
-                  //                     ),
-
-                  //                     child: Text(
-                  //                       'Cancle',
-                  //                       style: TextStyle(
-                  //                         color: AppColors.whiteColor,
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                   SizedBox(width: 10),
-                  //                   ElevatedButton(
-                  //                     onPressed: () {},
-                  //                     style: ButtonStyle(
-                  //                       backgroundColor:
-                  //                           WidgetStateProperty.all(
-                  //                             AppColors.blackColor,
-                  //                           ),
-                  //                     ),
-
-                  //                     child: Text(
-                  //                       'Submit',
-                  //                       style: TextStyle(
-                  //                         color: AppColors.whiteColor,
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //     );
-                  //   },
-                  // );
                 },
               ),
-              SizedBox(height: 10.h),
+              SizedBox(height: 20.h),
             ],
           ),
         ),

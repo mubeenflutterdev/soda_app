@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 class AppImages {
   static String splashImage = "assets/images/splashImage.png";
   static String splashTextImage = "assets/images/splash_text.png";

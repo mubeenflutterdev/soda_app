@@ -1,20 +1,19 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:soda_bar/const/app_colors.dart';
 import 'package:soda_bar/const/app_icons.dart';
-import 'package:soda_bar/const/app_images.dart';
+
 import 'package:soda_bar/presentation/user_view/profile_details_screen.dart';
 
 import 'package:soda_bar/provider/feature_provider/auth_provider.dart';
 import 'package:soda_bar/provider/feature_provider/categories_provider.dart';
 import 'package:soda_bar/provider/feature_provider/product_provider.dart';
 import 'package:soda_bar/provider/feature_provider/user_info_provider.dart';
-import 'package:soda_bar/utils/toast_utils.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -114,7 +113,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ListTile(
                 onTap: () async {
                await   productProvider.getProducts(context);
-                  print(productProvider.products[0].name);
+              
                   // try {
                   //   await FirebaseFirestore.instance
                   //       .collection('products')

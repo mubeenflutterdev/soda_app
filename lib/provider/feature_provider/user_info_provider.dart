@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +56,7 @@ class UserInfoProvider with ChangeNotifier {
       );
       notifyListeners();
     } catch (e) {
-      print(e.toString());
+   
       ToastUtil.showToast(
         context,
         message: e.toString(),

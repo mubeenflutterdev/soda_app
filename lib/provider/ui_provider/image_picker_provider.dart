@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, no_leading_underscores_for_local_identifiers
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -20,7 +22,7 @@ class ImagePickerProvider with ChangeNotifier {
         notifyListeners();
       }
     } catch (_e) {
-      print(_e.toString());
+     
       ToastUtil.showToast(
         context,
         message: _e.toString(),
@@ -40,7 +42,7 @@ class ImagePickerProvider with ChangeNotifier {
         notifyListeners();
       }
     } catch (_e) {
-      print(_e.toString());
+    
       ToastUtil.showToast(
         context,
         message: _e.toString(),

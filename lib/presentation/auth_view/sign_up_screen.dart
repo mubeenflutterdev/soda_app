@@ -1,12 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
+
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:soda_bar/const/app_colors.dart';
-import 'package:soda_bar/presentation/auth_view/forget_password_screen.dart';
+
 import 'package:soda_bar/presentation/auth_view/sign_in_screen.dart';
-import 'package:soda_bar/presentation/user_view/bottom_navigation_bar_screen.dart';
-import 'package:soda_bar/presentation/user_view/home_screen.dart';
+
 import 'package:soda_bar/provider/feature_provider/auth_provider.dart';
 import 'package:soda_bar/provider/feature_provider/user_info_provider.dart';
 

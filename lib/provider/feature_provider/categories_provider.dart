@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:soda_bar/models/categroies_model.dart';
@@ -18,10 +20,10 @@ class CategoriesProvider with ChangeNotifier {
         final category = CategoriesModel.fromFirestore(data, doc.id);
         categoriesList.add(category);
       }
-      print(categoriesList);
+      
       notifyListeners();
     } catch (e) {
-      print(e.toString());
+      
       ToastUtil.showToast(context, message: e.toString());
     } finally {
       isLoading = false;

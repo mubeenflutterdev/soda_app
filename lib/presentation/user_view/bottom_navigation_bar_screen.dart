@@ -1,12 +1,14 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:soda_bar/const/app_colors.dart';
-import 'package:soda_bar/const/app_images.dart';
+
 import 'package:soda_bar/presentation/user_view/cart_screen.dart';
-import 'package:soda_bar/presentation/user_view/check_out_screen.dart';
+
 
 import 'package:soda_bar/presentation/user_view/home_screen.dart';
 import 'package:soda_bar/presentation/user_view/notification_screen.dart';
@@ -26,7 +28,7 @@ class Bottomnavigationbarscreen extends StatefulWidget {
 class _BottomnavigationbarscreenState extends State<Bottomnavigationbarscreen> {
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     final userInfoProvider = Provider.of<UserInfoProvider>(
       context,
@@ -53,7 +55,7 @@ class _BottomnavigationbarscreenState extends State<Bottomnavigationbarscreen> {
       bottomNavigationBar: CurvedNavigationBar(
         buttonBackgroundColor: AppColors.buttonBackGround,
         animationCurve: Curves.decelerate,
-        color: AppColors.buttonBackGround.withValues(alpha: .3),
+        color: AppColors.buttonBackGround.withValues(alpha: .4),
         backgroundColor: Colors.transparent,
 
         // height: 70,
@@ -64,13 +66,13 @@ class _BottomnavigationbarscreenState extends State<Bottomnavigationbarscreen> {
         items: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Icon(FontAwesomeIcons.home, color: AppColors.blackColor),
+            child: Icon(FontAwesomeIcons.home, color: AppColors.whiteColor),
           ),
           Padding(
             padding: const EdgeInsets.all(20),
             child: Icon(
               FontAwesomeIcons.shoppingCart,
-              color: AppColors.blackColor,
+              color: AppColors.whiteColor,
             ),
           ),
           Padding(

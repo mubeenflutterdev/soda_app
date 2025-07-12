@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:soda_bar/widgets/shimmer/shimmer_box.dart';
 
@@ -7,11 +9,13 @@ class CategoriesShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: itemCount,
-      itemBuilder: (context, index) {
-        return ShimmerBox(height: 90, width: 50);
-      },
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        ShimmerBox(height: 40, width: 90),
+        ShimmerBox(height: 40, width: 90),
+        ShimmerBox(height: 40, width: 90),
+      ],
     );
   }
 }

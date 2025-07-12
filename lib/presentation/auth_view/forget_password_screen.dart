@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:soda_bar/presentation/auth_view/sign_up_screen.dart';
+
 import 'package:soda_bar/provider/feature_provider/auth_provider.dart';
 import 'package:soda_bar/widgets/buttons/button_component.dart';
 import 'package:soda_bar/widgets/text_field/text_form_field_component.dart';

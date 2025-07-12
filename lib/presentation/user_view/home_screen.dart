@@ -1,9 +1,10 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:buttons_tabbar/buttons_tabbar.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 
+import 'package:provider/provider.dart';
 import 'package:soda_bar/const/app_colors.dart';
 import 'package:soda_bar/models/product_model.dart';
 import 'package:soda_bar/presentation/user_view/details_screen.dart';
@@ -11,7 +12,8 @@ import 'package:soda_bar/provider/feature_provider/categories_provider.dart';
 import 'package:soda_bar/provider/feature_provider/product_provider.dart';
 import 'package:soda_bar/widgets/card/dashboard_component.dart';
 import 'package:soda_bar/widgets/card/product_dashboard_component.dart';
-import 'package:soda_bar/widgets/shimmer/shimmer_box.dart';
+import 'package:soda_bar/widgets/shimmer/categories_shimmer.dart';
+import 'package:soda_bar/widgets/shimmer/product_shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,136 +22,104 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
-  late TabController _tabController;
-
-  final List<String> _tabs = [
-    'Cola',
-    'Pepsi',
-    'Sprite',
-    '7Up',
-    'RootBeer',
-    'Fanta',
-    'Dew',
-  ];
-
+class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-
-    _tabController = TabController(length: _tabs.length, vsync: this);
-    _tabController.addListener(() {
-      setState(() {});
-    });
-
-    final productProvider = Provider.of<ProductProvider>(
+    CategoriesProvider categoriesProvider = Provider.of<CategoriesProvider>(
       context,
       listen: false,
     );
-    final categoriesProvider = Provider.of<CategoriesProvider>(
+    categoriesProvider.getCategories(context);
+    ProductProvider productProvider = Provider.of<ProductProvider>(
       context,
       listen: false,
     );
-
-    // Fetch only if not already loaded
-    if (productProvider.products.isEmpty) {
-      productProvider.getProducts(context);
-    }
-    if (categoriesProvider.categoriesList.isEmpty) {
-      categoriesProvider.getCategories(context);
-    }
+    productProvider.getProducts(context);
   }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
-  bool get wantKeepAlive => true; // Preserve state
 
   @override
   Widget build(BuildContext context) {
-    super.build(context); // Required when using AutomaticKeepAliveClientMixin
+    CategoriesProvider categoriesProvider = Provider.of<CategoriesProvider>(
+      context,
+    );
+    ProductProvider productProvider = Provider.of<ProductProvider>(context);
 
-    final productProvider = Provider.of<ProductProvider>(context);
-
-    return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: DefaultTabController(
+          length: 4,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /// Top Section
-              DashBoardComponent(),
-              SizedBox(height: 20.h),
-
               Padding(
-                padding: EdgeInsets.only(left: 20.w),
-                child: Text(
-                  "All Flavours",
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.bold,
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: CarouselSlider.builder(
+                  itemCount: 15,
+                  itemBuilder:
+                      (BuildContext context, int itemIndex, int pageViewIndex) {
+                        return DashBoardComponent();
+                      },
+                  options: CarouselOptions(
+                    autoPlayAnimationDuration: Duration(seconds: 3),
+                    autoPlay: true,
+                    aspectRatio: 16 / 12,
+                    viewportFraction: 1.05,
                   ),
                 ),
               ),
-              SizedBox(height: 10.h),
-
-              /// Scrollable Custom Tab Bar
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: List.generate(_tabs.length, (index) {
-                      final isSelected = _tabController.index == index;
-                      return Padding(
-                        padding: EdgeInsets.only(right: 8.w),
-                        child: GestureDetector(
-                          onTap: () {
-                            _tabController.animateTo(index);
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 16.w,
-                              vertical: 10.h,
+              Consumer<CategoriesProvider>(
+                builder: (context, categoriesProvider, child) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: categoriesProvider.isLoading == true
+                        ? CategoriesShimmer(itemCount: 2)
+                        : ButtonsTabBar(
+                            contentCenter: true,
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 10,
                             ),
-                            decoration: BoxDecoration(
-                              color: isSelected
-                                  ? AppColors.buttonBackGround
-                                  : AppColors.greyColor,
-                              borderRadius: BorderRadius.circular(20.r),
+                            buttonMargin: EdgeInsets.symmetric(horizontal: 5),
+                            backgroundColor: AppColors.buttonBackGround,
+                            borderWidth: 0,
+                            borderColor: Colors.black,
+                            labelStyle: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
                             ),
-                            child: Text(
-                              _tabs[index],
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            unselectedLabelStyle: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            tabs: List.generate(
+                              categoriesProvider.categoriesList.length,
+                              (index) {
+                                return Tab(
+                                  icon: Icon(Icons.home),
+                                  text: categoriesProvider
+                                      .categoriesList[index]
+                                      .name,
+                                );
+                              },
                             ),
                           ),
-                        ),
-                      );
-                    }),
-                  ),
-                ),
+                  );
+                },
               ),
-
-              SizedBox(height: 20.h),
-
-              /// Tab Content Area
+              // Use SizedBox with a fixed height for the TabBarView content
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.8,
+                height: MediaQuery.of(context).size.height,
                 child: TabBarView(
-                  controller: _tabController,
-                  physics: NeverScrollableScrollPhysics(),
-                  children: _tabs.map((tab) {
-                    return _buildTabContent(productProvider, tab);
-                  }).toList(),
+                  children: [
+                    productProvider.isLoading == true
+                        ? ProductShimmer()
+                        : ProductPreview(
+                            productModel: productProvider.products,
+                            category: categoriesProvider.categoriesList[0].name,
+                          ),
+                    Center(child: Text('hello')),
+                    Center(child: Text('hello')),
+                    Center(child: Text('hello')),
+                  ],
                 ),
               ),
             ],
@@ -158,51 +128,62 @@ class _HomeScreenState extends State<HomeScreen>
       ),
     );
   }
+}
 
-  Widget _buildTabContent(ProductProvider provider, String categoryName) {
-    final List<ProductModel> products = provider.products
-        .where(
-          (product) =>
-              product.category?.toLowerCase() == categoryName.toLowerCase(),
-        )
+class ProductPreview extends StatelessWidget {
+  List<ProductModel> productModel;
+  String category;
+  ProductPreview({
+    super.key,
+    required this.productModel,
+    required this.category,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    List<ProductModel> products = productModel;
+    final List<ProductModel> filteredList = products
+        .where((product) => product.category == category)
         .toList();
-
-    if (provider.isLoading == true) {
-      return Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ShimmerBox(height: 40, width: 60),
-      );
-    } else if (products.isEmpty) {
-      return Center(child: Text('No products found'));
-    }
-
     return Padding(
-      padding: EdgeInsets.all(10.w),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: GridView.builder(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: products.length,
+        physics: NeverScrollableScrollPhysics(), // Changed to allow scrolling
+        itemCount: filteredList.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          childAspectRatio: 0.656,
-          mainAxisSpacing: 10.h,
-          crossAxisSpacing: 10.w,
+          childAspectRatio: 0.67,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
         ),
         itemBuilder: (context, index) {
-          final product = products[index];
           return GestureDetector(
             onTap: () {
+              final ProductModel product = ProductModel(
+                price: filteredList[index].price,
+                image: filteredList[index].image,
+                name: filteredList[index].name,
+                addedDate: filteredList[index].addedDate,
+                categoryId: filteredList[index].categoryId,
+                flavor: filteredList[index].flavor,
+                id: filteredList[index].id,
+                size: filteredList[index].size,
+                updatedDate: filteredList[index].updatedDate,
+                quantity: filteredList[index].quantity,
+                rating: filteredList[index].rating,
+                category: filteredList[index].category,
+              );
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => DetailsScreen(product: product),
+                  builder: (context) => DetailsScreen(product: product),
                 ),
               );
             },
             child: ProductDasboard(
-              img: product.image ?? '',
-              name: product.name ?? '',
-              price: product.price ?? 0,
+              img: filteredList[index].image.toString(),
+              name: filteredList[index].name.toString(),
+              price: filteredList[index].price,
             ),
           );
         },

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:soda_bar/const/app_colors.dart';
-import 'package:soda_bar/const/app_icons.dart';
+
 import 'package:soda_bar/const/app_images.dart';
 import 'package:soda_bar/provider/feature_provider/notification_provider.dart';
-import 'package:soda_bar/provider/feature_provider/order_provider.dart';
+
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -56,7 +56,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ),
             ),
             subtitle: Text(
-              notificationProvider!.notificationList[0]['subTitle'],
+              notificationProvider.notificationList[0]['subTitle'],
               style: theme.textTheme.titleSmall!.copyWith(
                 color: AppColors.greyColor,
                 fontSize: 15,
@@ -78,7 +78,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ),
             ),
             subtitle: Text(
-              notificationProvider!.notificationList[0]['subTitle'],
+              notificationProvider.notificationList[0]['subTitle'],
               style: theme.textTheme.titleSmall!.copyWith(
                 color: AppColors.greyColor,
                 fontSize: 15,

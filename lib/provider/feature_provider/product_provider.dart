@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 import 'package:soda_bar/models/product_model.dart';
@@ -5,7 +7,7 @@ import 'package:soda_bar/utils/toast_utils.dart';
 
 class ProductProvider with ChangeNotifier {
   List<ProductModel> products = [];
-  bool? isLoading;
+  bool isLoading = false;
   Future getProducts(BuildContext context) async {
     try {
       isLoading = true;

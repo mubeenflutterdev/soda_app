@@ -1,7 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
+// ignore_for_file: unused_local_variable, use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:soda_bar/presentation/auth_view/sign_in_screen.dart';
@@ -39,7 +41,7 @@ class AuthentactionProvider with ChangeNotifier {
       }
     } catch (e) {
       // EasyLoading.dismiss();
-      print("error $e");
+      
     }
   }
 
@@ -81,7 +83,7 @@ class AuthentactionProvider with ChangeNotifier {
 
       // Verify user is actually signed in
       if (auth.currentUser != null) {
-        print("User signed in with UID: ${auth.currentUser!.uid}");
+        
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => Bottomnavigationbarscreen()),
@@ -116,7 +118,7 @@ class AuthentactionProvider with ChangeNotifier {
       );
 
       notifyListeners();
-      print('trying to sighnup ');
+   
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -135,7 +137,7 @@ class AuthentactionProvider with ChangeNotifier {
         MaterialPageRoute(builder: (context) => Bottomnavigationbarscreen()),
       );
     } catch (e) {
-      print(e.toString());
+   
       ToastUtil.showToast(
         context,
         message: e.toString(),

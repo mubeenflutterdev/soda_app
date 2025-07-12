@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,9 +8,9 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:soda_bar/const/app_colors.dart';
 import 'package:soda_bar/const/app_images.dart';
 
-import 'package:soda_bar/presentation/auth_view/sign_in_screen.dart';
+
 import 'package:soda_bar/provider/ui_provider/onboarding_provider.dart';
-import 'package:soda_bar/utils/custom_theme.dart';
+
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});

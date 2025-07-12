@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:soda_bar/const/app_colors.dart';
-import 'package:soda_bar/const/app_images.dart';
+
 import 'package:soda_bar/models/product_model.dart';
+import 'package:soda_bar/provider/feature_provider/cart_provider.dart';
 
 class DetailsScreen extends StatefulWidget {
   final ProductModel product;
@@ -19,6 +21,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     final double height = size.height;
     final double width = size.width;
     var theme = Theme.of(context);
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
       backgroundColor: AppColors.blackColor,
       body: SingleChildScrollView(
@@ -41,14 +44,24 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ),
               ),
               Positioned(
-                left: width * 0.04,
-                bottom: 350.h,
-                child: Image.asset(AppImages.detailsImage, height: 320.w),
+                // right: 10,
+                // left: 30,
+                bottom: 250.h,
+                child: SizedBox(
+                  height: 500,
+                  child: Image.asset(
+                    'assets/images/details.png',
+                    height: 420.w,
+                  ),
+                ),
               ),
               Positioned(
                 bottom: height * 0.4,
                 left: width * 0.03,
-                child: Text('Cool Berry', style: theme.textTheme.titleMedium),
+                child: Text(
+                  widget.product.name.toString(),
+                  style: theme.textTheme.titleMedium,
+                ),
               ),
               Positioned(
                 bottom: height * 0.36,
@@ -82,8 +95,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
               Positioned(
                 bottom: height * 0.27,
                 left: width * 0.03,
+                right: width * 0.03,
                 child: Text(
-                  'The fizz booom  is appreciated worldwide during\n the festival of holi. It’s refrershing taste ... Read more',
+                  'The fizz booom is appreciated world during the... Read more',
                   style: theme.textTheme.titleSmall!.copyWith(fontSize: 17),
                   textAlign: TextAlign.start,
                 ),
@@ -91,9 +105,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
               /// lastly section for price and add to cart button
               Positioned(
-                left: 20,
+                left: 20.w,
                 right: 20,
-                bottom: 10.h,
+                bottom: 30.h,
                 child: Container(
                   height: 101.h,
                   width: width,
@@ -127,24 +141,41 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       ),
                       Positioned(
                         top: height * 0.04,
-                        left: width * 0.5,
+                        left: width * 0.4,
 
                         child: Container(
                           decoration: BoxDecoration(
                             color: AppColors.buttonBackGround,
-                            borderRadius: BorderRadius.circular(40.r),
+                            borderRadius: BorderRadius.circular(20.r),
                           ),
                           child: Padding(
                             padding: EdgeInsets.symmetric(
                               horizontal: 20.w,
                               vertical: 15.h,
                             ),
-                            child: Text(
-                              'Add To Cart',
-                              style: theme.textTheme.titleSmall!.copyWith(
-                                fontSize: 17,
-                                color: AppColors.whiteColor,
-                              ),
+                            child: Consumer<CartProvider>(
+                              builder: (context, provider, child) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    cartProvider.addCart(
+                                      context,
+                                      widget.product,
+                                    );
+                                  },
+                                  child: provider.isLoading == true
+                                      ? Center(
+                                          child: CircularProgressIndicator(),
+                                        )
+                                      : Text(
+                                          'Add To Cart',
+                                          style: theme.textTheme.titleSmall!
+                                              .copyWith(
+                                                fontSize: 17.sp,
+                                                color: AppColors.whiteColor,
+                                              ),
+                                        ),
+                                );
+                              },
                             ),
                           ),
                         ),

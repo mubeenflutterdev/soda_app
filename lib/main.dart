@@ -7,12 +7,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:provider/provider.dart';
 import 'package:soda_bar/firebase_options.dart';
+
 import 'package:soda_bar/presentation/auth_view/onboarding_screen.dart';
 import 'package:soda_bar/presentation/auth_view/sign_in_screen.dart';
 import 'package:soda_bar/presentation/user_view/bottom_navigation_bar_screen.dart';
-import 'package:soda_bar/presentation/user_view/profile_screen.dart';
+
 
 import 'package:soda_bar/provider/feature_provider/auth_provider.dart';
+import 'package:soda_bar/provider/feature_provider/cart_counter_provider.dart';
 import 'package:soda_bar/provider/feature_provider/cart_provider.dart';
 import 'package:soda_bar/provider/feature_provider/categories_provider.dart';
 import 'package:soda_bar/provider/feature_provider/order_provider.dart';
@@ -25,7 +27,7 @@ import 'package:soda_bar/provider/ui_provider/image_picker_provider.dart';
 import 'package:soda_bar/provider/ui_provider/onboarding_provider.dart';
 import 'package:soda_bar/provider/ui_provider/theme_provider.dart';
 import 'package:soda_bar/utils/custom_theme.dart';
-import 'package:soda_bar/widgets/shimmer/shimmer_box.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +41,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => BottomBarProvider()),
         ChangeNotifierProvider(create: (_) => NotificationProvider()),
-        ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => CartCounterProvider()),
         ChangeNotifierProvider(create: (_) => ImagePickerProvider()),
         ChangeNotifierProvider(create: (_) => OrderProvider()),
         ChangeNotifierProvider(create: (_) => AuthentactionProvider()),
@@ -47,6 +49,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => UserInfoProvider()),
         ChangeNotifierProvider(create: (_) => CategoriesProvider()),
         ChangeNotifierProvider(create: (_) => ProductProvider()),
+        ChangeNotifierProvider(create: (_) => CartProvider()),
       ],
 
       /// for using screenUtils package
@@ -72,7 +75,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    // TODO: implement initState
+    
     super.initState();
     final provider = Provider.of<OnboardingProvider>(context, listen: false);
     provider.loadOnboardingStatus();
@@ -105,13 +108,12 @@ class _MyAppState extends State<MyApp> {
       theme: CustomTheme.lightTheme,
       themeMode: themeProvider.themeMode,
       darkTheme: CustomTheme.darkTheme,
+
       home: isUserLogin != null
           ? Bottomnavigationbarscreen()
           : provider.isSeen == true
           ? SignInScreen()
           : OnboardingScreen(),
-
-      
       debugShowCheckedModeBanner: false,
     );
   }
