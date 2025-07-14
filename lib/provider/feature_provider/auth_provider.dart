@@ -120,6 +120,7 @@ class AuthentactionProvider with ChangeNotifier {
         email: email,
         password: password,
       );
+      //
       userprovider.addUserInfo(
         FirebaseAuth.instance.currentUser!.uid,
         name,
