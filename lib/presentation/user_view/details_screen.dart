@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:soda_bar/const/app_colors.dart';
-
+import 'package:soda_bar/models/cart_model.dart';
 import 'package:soda_bar/models/product_model.dart';
+
 import 'package:soda_bar/provider/feature_provider/cart_provider.dart';
 
 class DetailsScreen extends StatefulWidget {
-  final ProductModel product;
-  const DetailsScreen({super.key, required this.product});
+  final ProductModel productModel;
+  const DetailsScreen({super.key, required this.productModel});
 
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
@@ -59,7 +60,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 bottom: height * 0.4,
                 left: width * 0.03,
                 child: Text(
-                  widget.product.name.toString(),
+                  widget.productModel.name.toString(),
                   style: theme.textTheme.titleMedium,
                 ),
               ),
@@ -157,10 +158,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               builder: (context, provider, child) {
                                 return GestureDetector(
                                   onTap: () {
-                                    cartProvider.addCart(
-                                      context,
-                                      widget.product,
-                                    );
+                                    // cartProvider.addCart(
+                                    //   context,
+                                    //   widget.productModel,
+
+                                    // );
                                   },
                                   child: provider.isLoading == true
                                       ? Center(

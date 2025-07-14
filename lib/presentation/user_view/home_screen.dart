@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:provider/provider.dart';
 import 'package:soda_bar/const/app_colors.dart';
+import 'package:soda_bar/models/cart_model.dart';
 import 'package:soda_bar/models/product_model.dart';
 import 'package:soda_bar/presentation/user_view/details_screen.dart';
 import 'package:soda_bar/provider/feature_provider/categories_provider.dart';
@@ -166,24 +167,11 @@ class ProductPreview extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              final ProductModel product = ProductModel(
-                price: filteredList[index].price,
-                image: filteredList[index].image,
-                name: filteredList[index].name,
-                addedDate: filteredList[index].addedDate,
-                categoryId: filteredList[index].categoryId,
-                flavor: filteredList[index].flavor,
-                id: filteredList[index].id,
-                size: filteredList[index].size,
-                updatedDate: filteredList[index].updatedDate,
-                quantity: filteredList[index].quantity,
-                rating: filteredList[index].rating,
-                category: filteredList[index].category,
-              );
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DetailsScreen(product: product),
+                  builder: (context) =>
+                      DetailsScreen(productModel: filteredList[index]),
                 ),
               );
             },

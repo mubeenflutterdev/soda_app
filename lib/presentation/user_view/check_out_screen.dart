@@ -5,12 +5,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:soda_bar/const/app_colors.dart';
 import 'package:soda_bar/const/app_images.dart';
+import 'package:soda_bar/provider/feature_provider/shop_provider.dart';
 import 'package:soda_bar/provider/ui_provider/check_out_provider.dart';
 import 'package:soda_bar/provider/ui_provider/image_picker_provider.dart';
 import 'package:soda_bar/widgets/buttons/button_component.dart';
 
 class CheckOutScreen extends StatefulWidget {
-  const CheckOutScreen({super.key});
+  int totalItems;
+  var totalPRice;
+  CheckOutScreen({
+    super.key,
+    required this.totalItems,
+    required this.totalPRice,
+  });
 
   @override
   State<CheckOutScreen> createState() => _CheckOutScreenState();
@@ -18,11 +25,23 @@ class CheckOutScreen extends StatefulWidget {
 
 class _CheckOutScreenState extends State<CheckOutScreen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ShopProvider shopProvider = Provider.of<ShopProvider>(
+      context,
+      listen: false,
+    );
+    shopProvider.getTable(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     ImagePickerProvider imagePickerProvider = Provider.of<ImagePickerProvider>(
       context,
     );
+    ShopProvider shopProvider = Provider.of<ShopProvider>(context);
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.only(left: 20.w, right: 10.w),
@@ -41,109 +60,50 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               /// table selection here
               Consumer<CheckOutProvider>(
                 builder: (context, cKProvider, child) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      /// table 1
-                      GestureDetector(
-                        onTap: () {
-                          cKProvider.tapOnTable1();
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: cKProvider.isTapTable1 == true
-                                ? Color.fromARGB(255, 235, 232, 232)
-                                : Colors.white,
-                          ),
+                  return SizedBox(
+                    height: 150,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: shopProvider.tableNumber,
+                      // itemCount: 4,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            cKProvider.selectTable(index);
+                          },
                           child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 20.w,
-                              vertical: 10,
-                            ),
-                            child: Column(
-                              children: [
-                                Text(
-                                  '1',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: cKProvider.isSelected(index) == true
+                                    ? Color.fromARGB(255, 235, 232, 232)
+                                    : Colors.white,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 20.w,
+                                  vertical: 10,
                                 ),
-                                Image.asset(AppImages.chairs, height: 60),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      /// table 2
-                      GestureDetector(
-                        onTap: () {
-                          cKProvider.tapOnTable2();
-                        },
-
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: cKProvider.isTapTable2 == true
-                                ? Color.fromARGB(255, 235, 232, 232)
-                                : Colors.white,
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 20.w,
-                              vertical: 10,
-                            ),
-                            child: Column(
-                              children: [
-                                Text(
-                                  '2',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      (index + 1).toString(),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    Image.asset(AppImages.chairs, height: 60),
+                                  ],
                                 ),
-                                Image.asset(AppImages.chairs, height: 60),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-
-                      /// table 3
-                      GestureDetector(
-                        onTap: () {
-                          cKProvider.tapOnTable3();
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: cKProvider.isTapTable3 == true
-                                ? Color.fromARGB(255, 235, 232, 232)
-                                : Colors.white,
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 20.w,
-                              vertical: 10,
-                            ),
-                            child: Column(
-                              children: [
-                                Text(
-                                  '3',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                Image.asset(AppImages.chairs, height: 60),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                        );
+                      },
+                    ),
                   );
                 },
               ),
@@ -167,7 +127,10 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [Text('Items'), Text('2')],
+                        children: [
+                          Text('Items'),
+                          Text(widget.totalItems.toString()),
+                        ],
                       ),
                       SizedBox(height: 6.h),
                       Row(
@@ -175,7 +138,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                         children: [
                           Text('SubTotal'),
                           Text(
-                            '\$55',
+                            widget.totalPRice.toString(),
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -187,7 +150,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                         children: [
                           Text('Discount'),
                           Text(
-                            '\$5',
+                            '\$ 0',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -211,7 +174,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                         children: [
                           Text('Total'),
                           Text(
-                            '\$50',
+                            widget.totalPRice.toString() + ' \$',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ],

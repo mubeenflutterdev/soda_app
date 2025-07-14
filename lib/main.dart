@@ -17,6 +17,7 @@ import 'package:soda_bar/provider/feature_provider/cart_provider.dart';
 import 'package:soda_bar/provider/feature_provider/categories_provider.dart';
 import 'package:soda_bar/provider/feature_provider/order_provider.dart';
 import 'package:soda_bar/provider/feature_provider/product_provider.dart';
+import 'package:soda_bar/provider/feature_provider/shop_provider.dart';
 import 'package:soda_bar/provider/feature_provider/user_info_provider.dart';
 import 'package:soda_bar/provider/ui_provider/bottom_bar_provider.dart';
 import 'package:soda_bar/provider/feature_provider/notification_provider.dart';
@@ -49,6 +50,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ProductProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
         ChangeNotifierProvider(create: (_) => CheckOutProvider()),
+        ChangeNotifierProvider(create: (_) => ShopProvider()),
       ],
 
       /// for using screenUtils package

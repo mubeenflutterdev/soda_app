@@ -1,32 +1,69 @@
-// ignore_for_file: use_build_context_synchronously, no_leading_underscores_for_local_identifiers
+// ignore_for_file: use_build_context_synchronously, no_leading_underscores_for_local_identifiers, unused_local_variable
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:soda_bar/models/cart_model.dart';
 import 'package:soda_bar/models/product_model.dart';
 import 'package:soda_bar/utils/toast_utils.dart';
 
 class CartProvider with ChangeNotifier {
   bool isLoading = false;
-  List<ProductModel> cartData = [];
+  List<CartModel> cartData = [];
   List<String> cartIds = [];
+  double? total_price;
+  bool isAvailbleInCart = false;
 
-  Future addCart(BuildContext context, ProductModel productInfo) async {
+  Future addCart(
+    BuildContext context,
+    ProductModel productModel,
+    String cartId,
+  ) async {
     try {
       isLoading = true;
       notifyListeners();
       final userId = FirebaseAuth.instance.currentUser!.uid;
-      if (productInfo.quantity == null || productInfo.quantity == 0) {
-        productInfo.quantity = 1;
+      if (productModel.quantity == null || productModel.quantity == 0) {
+        productModel.quantity = 1;
         // Default quantity on first add
       }
-      final firestore = FirebaseFirestore.instance
-          .collection('Cart')
-          .doc(userId)
-          .collection('Product')
-          .doc();
 
-      await firestore.set(productInfo.toFirestore());
+      checkAvailableCart(productModel.id.toString());
+
+      if (isAvailbleInCart == true) {
+        final firestore = FirebaseFirestore.instance
+            .collection('Cart')
+            .doc(userId)
+            .collection('Product')
+            .doc(cartId)
+            .update({
+              'quantity': FieldValue.increment(1),
+              'price': int.parse(productModel.price.toString()) * 2,
+            });
+      } else {
+        final firestore = FirebaseFirestore.instance
+            .collection('Cart')
+            .doc(userId)
+            .collection('Product')
+            .doc();
+        CartModel cartModel = CartModel(
+          id: productModel.id.toString(),
+          name: productModel.name.toString(),
+          image: productModel.image.toString(),
+          price: productModel.price!,
+          flavor: productModel.flavor!,
+          quantity: productModel.quantity!,
+          category: productModel.category!,
+          categoryId: productModel.categoryId!,
+          rating: productModel.rating!,
+          addedDate: productModel.addedDate!,
+          updatedDate: productModel.updatedDate!,
+          size: productModel.size!,
+          cartId: firestore.id,
+        );
+        await firestore.set(cartModel.toFirestore());
+      }
+
       ToastUtil.showToast(
         context,
         message: 'Product Added sucessfully',
@@ -37,6 +74,28 @@ class CartProvider with ChangeNotifier {
     } finally {
       isLoading = false;
       notifyListeners();
+    }
+  }
+
+  Future checkAvailableCart(String productId) async {
+    try {
+      final userId = FirebaseAuth.instance.currentUser!.uid;
+      QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection('Cart')
+          .doc(userId)
+          .collection('Product')
+          .where('id', isEqualTo: productId)
+          .get();
+
+      isAvailbleInCart = snapshot.docs.isNotEmpty;
+      notifyListeners();
+
+      return isAvailbleInCart;
+    } catch (e) {
+      print('Error checking cart availability: ${e.toString()}');
+      isAvailbleInCart = false;
+      notifyListeners();
+      return false;
     }
   }
 
@@ -55,7 +114,7 @@ class CartProvider with ChangeNotifier {
       cartIds.clear();
       for (var doc in snapshot.docs) {
         final data = doc.data() as Map<String, dynamic>;
-        final cart = ProductModel.fromFirestore(data);
+        final cart = CartModel.fromFirestore(data);
         cartData.add(cart);
         cartIds.add(doc.id);
       }
@@ -125,6 +184,7 @@ class CartProvider with ChangeNotifier {
     for (var item in cartData) {
       total += (item.price ?? 0) * (item.quantity ?? 1);
     }
+    total_price = total;
     return total;
   }
 }
