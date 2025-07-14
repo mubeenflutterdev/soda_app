@@ -7,11 +7,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:provider/provider.dart';
 import 'package:soda_bar/firebase_options.dart';
-
 import 'package:soda_bar/presentation/auth_view/onboarding_screen.dart';
 import 'package:soda_bar/presentation/auth_view/sign_in_screen.dart';
 import 'package:soda_bar/presentation/user_view/bottom_navigation_bar_screen.dart';
-
 
 import 'package:soda_bar/provider/feature_provider/auth_provider.dart';
 import 'package:soda_bar/provider/feature_provider/cart_counter_provider.dart';
@@ -22,12 +20,12 @@ import 'package:soda_bar/provider/feature_provider/product_provider.dart';
 import 'package:soda_bar/provider/feature_provider/user_info_provider.dart';
 import 'package:soda_bar/provider/ui_provider/bottom_bar_provider.dart';
 import 'package:soda_bar/provider/feature_provider/notification_provider.dart';
+import 'package:soda_bar/provider/ui_provider/check_out_provider.dart';
 import 'package:soda_bar/provider/ui_provider/home_provider.dart';
 import 'package:soda_bar/provider/ui_provider/image_picker_provider.dart';
 import 'package:soda_bar/provider/ui_provider/onboarding_provider.dart';
 import 'package:soda_bar/provider/ui_provider/theme_provider.dart';
 import 'package:soda_bar/utils/custom_theme.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,6 +48,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => CategoriesProvider()),
         ChangeNotifierProvider(create: (_) => ProductProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => CheckOutProvider()),
       ],
 
       /// for using screenUtils package
@@ -75,7 +74,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    
     super.initState();
     final provider = Provider.of<OnboardingProvider>(context, listen: false);
     provider.loadOnboardingStatus();
@@ -85,9 +83,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     //
     /// managing that where user shoul be go 2nd time
-    final provider = Provider.of<OnboardingProvider>(context);
+
     final themeProvider = Provider.of<ThemeProvider>(context);
-    User? isUserLogin = FirebaseAuth.instance.currentUser;
+    final provider = Provider.of<OnboardingProvider>(context);
 
     // Widget homeScreen;
     // if (isUserLogin != null) {
@@ -103,12 +101,11 @@ class _MyAppState extends State<MyApp> {
     // }
 
     // ignore: non_constant_identifier_names
-
+    final isUserLogin = FirebaseAuth.instance.currentUser;
     return MaterialApp(
       theme: CustomTheme.lightTheme,
       themeMode: themeProvider.themeMode,
       darkTheme: CustomTheme.darkTheme,
-
       home: isUserLogin != null
           ? Bottomnavigationbarscreen()
           : provider.isSeen == true

@@ -10,13 +10,16 @@ class CartProvider with ChangeNotifier {
   bool isLoading = false;
   List<ProductModel> cartData = [];
   List<String> cartIds = [];
-  late List<ProductModel> productInfo;
+
   Future addCart(BuildContext context, ProductModel productInfo) async {
     try {
       isLoading = true;
       notifyListeners();
       final userId = FirebaseAuth.instance.currentUser!.uid;
-
+      if (productInfo.quantity == null || productInfo.quantity == 0) {
+        productInfo.quantity = 1;
+        // Default quantity on first add
+      }
       final firestore = FirebaseFirestore.instance
           .collection('Cart')
           .doc(userId)
@@ -56,7 +59,6 @@ class CartProvider with ChangeNotifier {
         cartData.add(cart);
         cartIds.add(doc.id);
       }
-     
     } catch (_e) {
       ToastUtil.showToast(context, message: _e.toString());
     } finally {
@@ -79,11 +81,10 @@ class CartProvider with ChangeNotifier {
           .delete();
       ToastUtil.showToast(context, message: "Daleted sucessfully");
       final index = cartIds.indexOf(docID);
-    if (index != -1) {
-      cartData.removeAt(index);
-      cartIds.removeAt(index);
-    }
-
+      if (index != -1) {
+        cartData.removeAt(index);
+        cartIds.removeAt(index);
+      }
     } catch (_e) {
       ToastUtil.showToast(context, message: _e.toString());
     } finally {
@@ -92,15 +93,38 @@ class CartProvider with ChangeNotifier {
     }
   }
 
-  void increment(index) {
-    cartData[index].quantity = (cartData[index].quantity ?? 1) + 1;
-    notifyListeners();
+  Future updateQuantityInFirestore(int index) async {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    final docId = cartIds[index];
+
+    await FirebaseFirestore.instance
+        .collection('Cart')
+        .doc(userId)
+        .collection('Product')
+        .doc(docId)
+        .update({'quantity': cartData[index].quantity});
   }
 
-  void decrement(int index) {
+  void increment(index) async {
+    cartData[index].quantity = (cartData[index].quantity ?? 1) + 1;
+    notifyListeners();
+    await updateQuantityInFirestore(index);
+  }
+
+  void decrement(int index) async {
     if (cartData[index].quantity != null && cartData[index].quantity! > 1) {
-      cartData[index].quantity = (cartData[index].quantity ??2)- 1;
+      cartData[index].quantity = (cartData[index].quantity ?? 2) - 1;
       notifyListeners();
+      await updateQuantityInFirestore(index);
     }
+  }
+
+  totalPrice() {
+    double total = 0.0;
+
+    for (var item in cartData) {
+      total += (item.price ?? 0) * (item.quantity ?? 1);
+    }
+    return total;
   }
 }

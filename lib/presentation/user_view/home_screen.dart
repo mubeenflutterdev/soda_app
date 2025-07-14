@@ -3,6 +3,7 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:provider/provider.dart';
 import 'package:soda_bar/const/app_colors.dart';
@@ -12,8 +13,8 @@ import 'package:soda_bar/provider/feature_provider/categories_provider.dart';
 import 'package:soda_bar/provider/feature_provider/product_provider.dart';
 import 'package:soda_bar/widgets/card/dashboard_component.dart';
 import 'package:soda_bar/widgets/card/product_dashboard_component.dart';
-import 'package:soda_bar/widgets/shimmer/categories_shimmer.dart';
-import 'package:soda_bar/widgets/shimmer/product_shimmer.dart';
+import 'package:soda_bar/widgets/card/shimmer/categories_shimmer.dart';
+import 'package:soda_bar/widgets/card/shimmer/product_shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -44,7 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
       context,
     );
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
-
+    /////////   expreiment
+    // productProvider.getProducts(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: DefaultTabController(
@@ -111,7 +113,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: TabBarView(
                   children: [
                     productProvider.isLoading == true
-                        ? ProductShimmer()
+                        ? Padding(
+                            padding: EdgeInsetsGeometry.symmetric(
+                              vertical: 20.h,
+                            ),
+                            child: ProductShimmer(),
+                          )
                         : ProductPreview(
                             productModel: productProvider.products,
                             category: categoriesProvider.categoriesList[0].name,

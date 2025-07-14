@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:soda_bar/widgets/shimmer/shimmer_box.dart';
+import 'package:soda_bar/widgets/card/shimmer/shimmer_box.dart';
 
 class ProductShimmer extends StatelessWidget {
   const ProductShimmer({super.key});

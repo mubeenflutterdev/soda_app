@@ -8,9 +8,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:soda_bar/const/app_colors.dart';
 import 'package:soda_bar/const/app_images.dart';
 
-
 import 'package:soda_bar/provider/ui_provider/onboarding_provider.dart';
-
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -40,10 +38,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   Container(
                     child: Column(
                       children: [
-                        Image.asset(AppImages.splashImage, height: 400.h),
+                        SizedBox(height: 50.h),
+                        Image.asset(AppImages.splashImage, height: 350.h),
                         Padding(
                           padding: EdgeInsets.symmetric(
-                            horizontal: 90.w,
+                            horizontal: 50.w,
                             vertical: 10.h,
                           ),
                           child: Text(
@@ -71,20 +70,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ],
                     ),
                   ),
+
                   Container(
                     child: Column(
                       children: [
-                        Image.asset(AppImages.splashImage, height: 400.h),
+                        SizedBox(height: 50.h),
+                        Image.asset(AppImages.splashImage, height: 350.h),
                         Padding(
                           padding: EdgeInsets.symmetric(
-                            horizontal: 90.w,
+                            horizontal: 50.w,
                             vertical: 10.h,
                           ),
                           child: Text(
                             'ENJOY EVERY SIP',
-                            style: theme.textTheme.headlineLarge!.copyWith(
-                              fontSize: 30,
+                            style: GoogleFonts.montserrat(
                               color: AppColors.whiteColor,
+                              fontSize: 30.sp,
+                              fontWeight: FontWeight.bold,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -104,13 +106,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ],
                     ),
                   ),
+
                   Container(
                     child: Column(
                       children: [
-                        Image.asset(AppImages.splashImage, height: 400.h),
+                        SizedBox(height: 50.h),
+                        Image.asset(AppImages.splashImage, height: 350.h),
                         Padding(
                           padding: EdgeInsets.symmetric(
-                            horizontal: 90.w,
+                            horizontal: 50.w,
                             vertical: 10.h,
                           ),
                           child: Text(

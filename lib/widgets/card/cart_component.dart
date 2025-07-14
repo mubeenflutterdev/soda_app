@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:soda_bar/animation/floating_animation.dart';
 import 'package:soda_bar/const/app_colors.dart';
-import 'package:soda_bar/provider/feature_provider/cart_counter_provider.dart';
 
 import 'package:soda_bar/provider/feature_provider/cart_provider.dart';
 
@@ -28,11 +27,11 @@ class CartComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CartProvider cartProvider = Provider.of<CartProvider>(context);
-    CartCounterProvider cartCounterProvider = Provider.of<CartCounterProvider>(
-      context,
-    );
-    var price =
-        cartProvider.cartData[index].price! * cartCounterProvider.counter;
+
+    double totalPrice =
+        (cartProvider.cartData[index].price ?? 0) *
+        (cartProvider.cartData[index].quantity ?? 1);
+
     return SizedBox(
       height: 150,
       width: double.infinity,
@@ -70,8 +69,7 @@ class CartComponent extends StatelessWidget {
                           style: TextStyle(color: Colors.white),
                         ),
                         Text(
-                          // (cartProvider.cartData[index].price.toString())*(cartCounterProvider.counter),
-                          price.toString(),
+                          totalPrice.toStringAsFixed(2),
 
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -84,11 +82,10 @@ class CartComponent extends StatelessWidget {
                       padding: EdgeInsets.only(right: 10.w),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        // crossAxisAlignment: CrossAxisAlignment.center,
+
                         children: [
                           GestureDetector(
                             onTap: () {
-                              //// i am deleteing cart
                               cartProvider.deleteCart(context, cartId);
                             },
 
@@ -99,7 +96,7 @@ class CartComponent extends StatelessWidget {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  cartCounterProvider.counterIncrement();
+                                  cartProvider.increment(index);
                                 },
                                 child: Icon(
                                   Icons.add,
@@ -110,7 +107,9 @@ class CartComponent extends StatelessWidget {
                               Consumer(
                                 builder: (context, counterProvider, child) {
                                   return Text(
-                                    cartCounterProvider.counter.toString(),
+                                    cartProvider.cartData[index].quantity
+                                        .toString(),
+
                                     style: TextStyle(
                                       color: AppColors.whiteColor,
                                     ),
@@ -121,16 +120,11 @@ class CartComponent extends StatelessWidget {
 
                               GestureDetector(
                                 onTap: () {
-                                  cartCounterProvider.counterDecrement();
+                                  cartProvider.decrement(index);
                                 },
-                                child: GestureDetector(
-                                  onTap: () {
-                                    cartProvider.decrement(index);
-                                  },
-                                  child: Icon(
-                                    Icons.remove,
-                                    color: AppColors.whiteColor,
-                                  ),
+                                child: Icon(
+                                  Icons.remove,
+                                  color: AppColors.whiteColor,
                                 ),
                               ),
                             ],

@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:soda_bar/const/app_colors.dart';
 import 'package:soda_bar/const/app_images.dart';
+import 'package:soda_bar/provider/ui_provider/check_out_provider.dart';
 import 'package:soda_bar/provider/ui_provider/image_picker_provider.dart';
 import 'package:soda_bar/widgets/buttons/button_component.dart';
 
@@ -38,104 +39,120 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               SizedBox(height: 20.h),
 
               /// table selection here
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  /// table 1
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: const Color.fromARGB(255, 181, 210, 214),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20.w,
-                          vertical: 10,
-                        ),
-                        child: Column(
-                          children: [
-                            Text(
-                              '1',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
+              Consumer<CheckOutProvider>(
+                builder: (context, cKProvider, child) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      /// table 1
+                      GestureDetector(
+                        onTap: () {
+                          cKProvider.tapOnTable1();
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: cKProvider.isTapTable1 == true
+                                ? Color.fromARGB(255, 235, 232, 232)
+                                : Colors.white,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 20.w,
+                              vertical: 10,
                             ),
-                            Image.asset(AppImages.chairs, height: 60),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  /// table 2
-                  GestureDetector(
-                    onTap: () {},
-
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: const Color.fromARGB(255, 240, 239, 239),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20.w,
-                          vertical: 10,
-                        ),
-                        child: Column(
-                          children: [
-                            Text(
-                              '2',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
+                            child: Column(
+                              children: [
+                                Text(
+                                  '1',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Image.asset(AppImages.chairs, height: 60),
+                              ],
                             ),
-                            Image.asset(AppImages.chairs, height: 60),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
 
-                  /// table 3
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: const Color.fromARGB(255, 240, 239, 239),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20.w,
-                          vertical: 10,
-                        ),
-                        child: Column(
-                          children: [
-                            Text(
-                              '3',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
+                      /// table 2
+                      GestureDetector(
+                        onTap: () {
+                          cKProvider.tapOnTable2();
+                        },
+
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: cKProvider.isTapTable2 == true
+                                ? Color.fromARGB(255, 235, 232, 232)
+                                : Colors.white,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 20.w,
+                              vertical: 10,
                             ),
-                            Image.asset(AppImages.chairs, height: 60),
-                          ],
+                            child: Column(
+                              children: [
+                                Text(
+                                  '2',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Image.asset(AppImages.chairs, height: 60),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ],
+
+                      /// table 3
+                      GestureDetector(
+                        onTap: () {
+                          cKProvider.tapOnTable3();
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: cKProvider.isTapTable3 == true
+                                ? Color.fromARGB(255, 235, 232, 232)
+                                : Colors.white,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 20.w,
+                              vertical: 10,
+                            ),
+                            child: Column(
+                              children: [
+                                Text(
+                                  '3',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Image.asset(AppImages.chairs, height: 60),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
               SizedBox(height: 20.h),
 
               /// order summary here
               Container(
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 241, 241, 241),
+                  color: const Color.fromARGB(255, 235, 232, 232),
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Padding(

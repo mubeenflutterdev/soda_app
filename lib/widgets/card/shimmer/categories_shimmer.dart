@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:soda_bar/widgets/shimmer/shimmer_box.dart';
+import 'package:soda_bar/widgets/card/shimmer/shimmer_box.dart';
 
 class CategoriesShimmer extends StatelessWidget {
   int itemCount;

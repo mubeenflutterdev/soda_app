@@ -44,11 +44,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ),
               ),
               Positioned(
-                // right: 10,
-                // left: 30,
-                bottom: 250.h,
+                right: 5,
+                bottom: 320.h,
                 child: SizedBox(
-                  height: 500,
+                  height: 400,
+                  width: 300,
                   child: Image.asset(
                     'assets/images/details.png',
                     height: 420.w,
