@@ -11,7 +11,7 @@ class ProductModel {
   String? addedDate;
   String? updatedDate;
   String? size;
-
+  String? cartId;
   ProductModel({
     this.id,
     this.name,
@@ -25,6 +25,7 @@ class ProductModel {
     this.addedDate,
     this.updatedDate,
     this.size,
+    this.cartId,
   });
 
   /// ✅ SAFE: Parses even if Firestore returns string instead of double/int
@@ -53,6 +54,7 @@ class ProductModel {
     addedDate = json['addedDate'];
     updatedDate = json['updatedDate'];
     size = json['size'];
+    cartId = json['cartId'];
   }
 
   Map<String, dynamic> toFirestore() {
@@ -69,6 +71,7 @@ class ProductModel {
     data['addedDate'] = addedDate;
     data['updatedDate'] = updatedDate;
     data['size'] = size;
+    data['cartId'] = cartId;
     return data;
   }
 }

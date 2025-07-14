@@ -3,22 +3,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:soda_bar/models/cart_model.dart';
+
 import 'package:soda_bar/models/product_model.dart';
 import 'package:soda_bar/utils/toast_utils.dart';
 
 class CartProvider with ChangeNotifier {
   bool isLoading = false;
-  List<CartModel> cartData = [];
+  List<ProductModel> productModel = [];
   List<String> cartIds = [];
   double? total_price;
   bool isAvailbleInCart = false;
 
-  Future addCart(
-    BuildContext context,
-    ProductModel productModel,
-    String cartId,
-  ) async {
+  Future addCart(BuildContext context, ProductModel productModel) async {
     try {
       isLoading = true;
       notifyListeners();
@@ -29,13 +25,13 @@ class CartProvider with ChangeNotifier {
       }
 
       checkAvailableCart(productModel.id.toString());
-
+      print(isAvailbleInCart);
       if (isAvailbleInCart == true) {
         final firestore = FirebaseFirestore.instance
             .collection('Cart')
             .doc(userId)
             .collection('Product')
-            .doc(cartId)
+            .doc(productModel.cartId)
             .update({
               'quantity': FieldValue.increment(1),
               'price': int.parse(productModel.price.toString()) * 2,
@@ -46,22 +42,8 @@ class CartProvider with ChangeNotifier {
             .doc(userId)
             .collection('Product')
             .doc();
-        CartModel cartModel = CartModel(
-          id: productModel.id.toString(),
-          name: productModel.name.toString(),
-          image: productModel.image.toString(),
-          price: productModel.price!,
-          flavor: productModel.flavor!,
-          quantity: productModel.quantity!,
-          category: productModel.category!,
-          categoryId: productModel.categoryId!,
-          rating: productModel.rating!,
-          addedDate: productModel.addedDate!,
-          updatedDate: productModel.updatedDate!,
-          size: productModel.size!,
-          cartId: firestore.id,
-        );
-        await firestore.set(cartModel.toFirestore());
+
+        await firestore.set(productModel.toFirestore());
       }
 
       ToastUtil.showToast(
@@ -110,12 +92,12 @@ class CartProvider with ChangeNotifier {
           .doc(userId)
           .collection('Product')
           .get();
-      cartData.clear();
+      productModel.clear();
       cartIds.clear();
       for (var doc in snapshot.docs) {
         final data = doc.data() as Map<String, dynamic>;
-        final cart = CartModel.fromFirestore(data);
-        cartData.add(cart);
+        final cart = ProductModel.fromFirestore(data);
+        productModel.add(cart);
         cartIds.add(doc.id);
       }
     } catch (_e) {
@@ -141,7 +123,7 @@ class CartProvider with ChangeNotifier {
       ToastUtil.showToast(context, message: "Daleted sucessfully");
       final index = cartIds.indexOf(docID);
       if (index != -1) {
-        cartData.removeAt(index);
+        productModel.removeAt(index);
         cartIds.removeAt(index);
       }
     } catch (_e) {
@@ -161,18 +143,19 @@ class CartProvider with ChangeNotifier {
         .doc(userId)
         .collection('Product')
         .doc(docId)
-        .update({'quantity': cartData[index].quantity});
+        .update({'quantity': productModel[index].quantity});
   }
 
   void increment(index) async {
-    cartData[index].quantity = (cartData[index].quantity ?? 1) + 1;
+    productModel[index].quantity = (productModel[index].quantity ?? 1) + 1;
     notifyListeners();
     await updateQuantityInFirestore(index);
   }
 
   void decrement(int index) async {
-    if (cartData[index].quantity != null && cartData[index].quantity! > 1) {
-      cartData[index].quantity = (cartData[index].quantity ?? 2) - 1;
+    if (productModel[index].quantity != null &&
+        productModel[index].quantity! > 1) {
+      productModel[index].quantity = (productModel[index].quantity ?? 2) - 1;
       notifyListeners();
       await updateQuantityInFirestore(index);
     }
@@ -181,7 +164,7 @@ class CartProvider with ChangeNotifier {
   totalPrice() {
     double total = 0.0;
 
-    for (var item in cartData) {
+    for (var item in productModel) {
       total += (item.price ?? 0) * (item.quantity ?? 1);
     }
     total_price = total;

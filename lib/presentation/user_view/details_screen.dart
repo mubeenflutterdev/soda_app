@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:soda_bar/const/app_colors.dart';
-import 'package:soda_bar/models/cart_model.dart';
+
 import 'package:soda_bar/models/product_model.dart';
 
 import 'package:soda_bar/provider/feature_provider/cart_provider.dart';
@@ -158,11 +158,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               builder: (context, provider, child) {
                                 return GestureDetector(
                                   onTap: () {
-                                    // cartProvider.addCart(
-                                    //   context,
-                                    //   widget.productModel,
-
-                                    // );
+                                    cartProvider.addCart(
+                                      context,
+                                      widget.productModel,
+                                    );
                                   },
                                   child: provider.isLoading == true
                                       ? Center(

@@ -51,22 +51,24 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                         Expanded(
                           child: ListView.builder(
-                            itemCount: cartProvider.cartData.length,
+                            itemCount: cartProvider.productModel.length,
                             itemBuilder: (context, index) {
                               return value.isLoading == true
                                   ? ProductShimmer()
                                   : CartComponent(
-                                      categorey: provider.cartData.isEmpty
+                                      categorey: provider.productModel.isEmpty
                                           ? 'No Data'
-                                          : provider.cartData[index].category
+                                          : provider
+                                                .productModel[index]
+                                                .category
                                                 .toString(),
-                                      name: provider.cartData.isEmpty
+                                      name: provider.productModel.isEmpty
                                           ? 'No Data'
-                                          : provider.cartData[index].name
+                                          : provider.productModel[index].name
                                                 .toString(),
-                                      price: provider.cartData.isEmpty
+                                      price: provider.productModel.isEmpty
                                           ? 555
-                                          : provider.cartData[index].price,
+                                          : provider.productModel[index].price,
                                       index: index,
                                       cartId: provider.cartIds[index],
                                     );
@@ -82,7 +84,7 @@ class _CartScreenState extends State<CartScreen> {
                               MaterialPageRoute(
                                 builder: (context) => CheckOutScreen(
                                   totalPRice: provider.total_price,
-                                  totalItems: cartProvider.cartData.length,
+                                  totalItems: cartProvider.productModel.length,
                                 ),
                               ),
                             );

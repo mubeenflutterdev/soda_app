@@ -29,8 +29,8 @@ class CartComponent extends StatelessWidget {
     CartProvider cartProvider = Provider.of<CartProvider>(context);
 
     double totalPrice =
-        (cartProvider.cartData[index].price ?? 0) *
-        (cartProvider.cartData[index].quantity ?? 1);
+        (cartProvider.productModel[index].price ?? 0) *
+        (cartProvider.productModel[index].quantity ?? 1);
 
     return SizedBox(
       height: 150,
@@ -57,7 +57,7 @@ class CartComponent extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          cartProvider.cartData[index].name.toString(),
+                          cartProvider.productModel[index].name.toString(),
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -65,7 +65,7 @@ class CartComponent extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          cartProvider.cartData[index].category.toString(),
+                          cartProvider.productModel[index].category.toString(),
                           style: TextStyle(color: Colors.white),
                         ),
                         Text(
@@ -107,7 +107,7 @@ class CartComponent extends StatelessWidget {
                               Consumer(
                                 builder: (context, counterProvider, child) {
                                   return Text(
-                                    cartProvider.cartData[index].quantity
+                                    cartProvider.productModel[index].quantity
                                         .toString(),
 
                                     style: TextStyle(
