@@ -99,16 +99,42 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
               SizedBox(height: 20.h),
-              ButtonComponent(
-                height: 60.h,
-                text: 'Sign In',
-                borderRadius: 9.r,
-                ontap: () async {
-                  if (_formKey.currentState!.validate()) {
-                    String email = emailControler.text.trim();
-                    String password = passwordControler.text.trim();
-                    await signInProvider.signInUser(email, password, context);
-                  }
+              Consumer<AuthentactionProvider>(
+                builder: (context, provider, child) {
+                  return GestureDetector(
+                    onTap: () async {
+                      if (_formKey.currentState!.validate()) {
+                        String email = emailControler.text.trim();
+                        String password = passwordControler.text.trim();
+                        await signInProvider.signInUser(
+                          email,
+                          password,
+                          context,
+                        );
+                      }
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 80.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: AppColors.buttonBackGround,
+                      ),
+                      child: provider.isloginLoading == true
+                          ? Center(
+                              child: CircularProgressIndicator(
+                                color: AppColors.whiteColor,
+                              ),
+                            )
+                          : Center(
+                              child: Text(
+                                'Sign In',
+                                style: TextStyle(color: AppColors.whiteColor),
+                              ),
+                            ),
+                    ),
+                  );
+                 
                 },
               ),
               Padding(

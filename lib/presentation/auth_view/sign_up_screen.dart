@@ -1,11 +1,12 @@
-
 // ignore_for_file: unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:soda_bar/const/app_colors.dart';
 
 import 'package:soda_bar/presentation/auth_view/sign_in_screen.dart';
+import 'package:soda_bar/presentation/user_view/bottom_navigation_bar_screen.dart';
 
 import 'package:soda_bar/provider/feature_provider/auth_provider.dart';
 import 'package:soda_bar/provider/feature_provider/user_info_provider.dart';
@@ -123,34 +124,86 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ontap: () {},
               ),
               SizedBox(height: 20.h),
-              ButtonComponent(
-                height: 60.h,
-                text: 'SIGN UP',
-                borderRadius: 9.r,
-                ontap: () async {
-                  String email = emailControler.text.trim();
-                  String password = passwordControler.text.trim();
-                  String name = nameControler.text.trim();
-                  if (_formKey.currentState!.validate()) {
-                    await signUpProvider.signUpUser(
-                      name,
-                      email,
-                      password,
-                      context,
-                    );
+              Consumer<AuthentactionProvider>(
+                builder: (context, provider, child) {
+                  return GestureDetector(
+                    onTap: () async {
+                      String email = emailControler.text.trim();
+                      String password = passwordControler.text.trim();
+                      String name = nameControler.text.trim();
+                      if (_formKey.currentState!.validate()) {
+                        await signUpProvider.signUpUser(
+                          name,
+                          email,
+                          password,
+                          context,
+                        );
 
-                    // userInfoProvider.addUserInfo(name, email, context,);
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => Bottomnavigationbarscreen(),
-                    //   ),
-                    // );
-                  }
+                        // userInfoProvider.addUserInfo(, name, email, profileImage, lastLogin, updatedAt, context)
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => Bottomnavigationbarscreen(),
+                        //   ),
+                        // );
+                      }
 
-                  // signUpProvider.signUpUser(email, password, context);
+                      // signUpProvider.signUpUser(email, password, context);
+                    },
+
+                    child: Container(
+                      width: double.infinity,
+                      height: 80.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: AppColors.buttonBackGround,
+                      ),
+                      child: provider.isSignUPLoading == true
+                          ? Center(
+                              child: CircularProgressIndicator(
+                                color: AppColors.whiteColor,
+                              ),
+                            )
+                          : Center(
+                              child: Text(
+                                'Sign In',
+                                style: TextStyle(color: AppColors.whiteColor),
+                              ),
+                            ),
+                    ),
+                  );
                 },
               ),
+
+              // ButtonComponent(
+              //   height: 60.h,
+              //   text: 'SIGN UP',
+              //   borderRadius: 9.r,
+              //   ontap: () async {
+              //     String email = emailControler.text.trim();
+              //     String password = passwordControler.text.trim();
+              //     String name = nameControler.text.trim();
+              //     if (_formKey.currentState!.validate()) {
+              //       await signUpProvider.signUpUser(
+              //         name,
+              //         email,
+              //         password,
+              //         context,
+              //       );
+
+              //       // userInfoProvider.addUserInfo(, name, email, profileImage, lastLogin, updatedAt, context)
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //           builder: (context) => Bottomnavigationbarscreen(),
+              //         ),
+              //       );
+              //     }
+
+              //     // signUpProvider.signUpUser(email, password, context);
+              //   },
+
+              // ),
               Padding(
                 padding: EdgeInsets.only(top: 20.h),
                 child: Row(

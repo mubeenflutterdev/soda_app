@@ -1,9 +1,6 @@
-// ignore_for_file: use_build_context_synchronously, no_leading_underscores_for_local_identifiers, unused_local_variable
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'package:soda_bar/models/product_model.dart';
 import 'package:soda_bar/utils/toast_utils.dart';
 
@@ -19,47 +16,63 @@ class CartProvider with ChangeNotifier {
       isLoading = true;
       notifyListeners();
       final userId = FirebaseAuth.instance.currentUser!.uid;
-      if (productModel.quantity == null || productModel.quantity == 0) {
+
+      // Set default quantity if null or 0
+      productModel.quantity ??= 1;
+      if (productModel.quantity! < 1) {
         productModel.quantity = 1;
-        // Default quantity on first add
       }
 
-      checkAvailableCart(productModel.id.toString());
-      print(isAvailbleInCart);
-      if (isAvailbleInCart == true) {
-        final firestore = FirebaseFirestore.instance
+      // Check if product exists in cart
+      QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection('Cart')
+          .doc(userId)
+          .collection('Product')
+          .where('id', isEqualTo: productModel.id.toString())
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        // Product exists in cart - update quantity
+        String cartId = snapshot.docs.first.id;
+        int currentQuantity = snapshot.docs.first.get('quantity') ?? 1;
+        double productPrice = double.parse(productModel.price.toString());
+
+        await FirebaseFirestore.instance
             .collection('Cart')
             .doc(userId)
             .collection('Product')
-            .doc(productModel.cartId)
+            .doc(cartId)
             .update({
-              'quantity': FieldValue.increment(1),
-              'price': int.parse(productModel.price.toString()) * 2,
+              'quantity': currentQuantity + 1,
+              'price': productPrice * (currentQuantity + 1),
             });
       } else {
+        // Product doesn't exist in cart - add new
         final firestore = FirebaseFirestore.instance
             .collection('Cart')
             .doc(userId)
             .collection('Product')
             .doc();
 
+        productModel.cartId = firestore.id;
+        productModel.quantity = 1; // Set initial quantity to 1
         await firestore.set(productModel.toFirestore());
       }
 
       ToastUtil.showToast(
         context,
-        message: 'Product Added sucessfully',
+        message: 'Product added to cart',
         type: ToastType.success,
       );
-    } catch (_e) {
-      ToastUtil.showToast(context, message: _e.toString());
+    } catch (e) {
+      ToastUtil.showToast(context, message: e.toString());
     } finally {
       isLoading = false;
       notifyListeners();
     }
   }
 
-  Future checkAvailableCart(String productId) async {
+  Future<bool> checkAvailableCart(String productId) async {
     try {
       final userId = FirebaseAuth.instance.currentUser!.uid;
       QuerySnapshot snapshot = await FirebaseFirestore.instance
@@ -71,7 +84,6 @@ class CartProvider with ChangeNotifier {
 
       isAvailbleInCart = snapshot.docs.isNotEmpty;
       notifyListeners();
-
       return isAvailbleInCart;
     } catch (e) {
       print('Error checking cart availability: ${e.toString()}');
@@ -92,23 +104,25 @@ class CartProvider with ChangeNotifier {
           .doc(userId)
           .collection('Product')
           .get();
+
       productModel.clear();
       cartIds.clear();
+
       for (var doc in snapshot.docs) {
         final data = doc.data() as Map<String, dynamic>;
         final cart = ProductModel.fromFirestore(data);
         productModel.add(cart);
         cartIds.add(doc.id);
       }
-    } catch (_e) {
-      ToastUtil.showToast(context, message: _e.toString());
+    } catch (e) {
+      ToastUtil.showToast(context, message: e.toString());
     } finally {
       isLoading = false;
       notifyListeners();
     }
   }
 
-  Future deleteCart(BuildContext context, docID) async {
+  Future deleteCart(BuildContext context, String docID) async {
     try {
       isLoading = true;
       notifyListeners();
@@ -120,14 +134,16 @@ class CartProvider with ChangeNotifier {
           .collection('Product')
           .doc(docID)
           .delete();
-      ToastUtil.showToast(context, message: "Daleted sucessfully");
+
+      ToastUtil.showToast(context, message: "Removed from cart");
+
       final index = cartIds.indexOf(docID);
       if (index != -1) {
         productModel.removeAt(index);
         cartIds.removeAt(index);
       }
-    } catch (_e) {
-      ToastUtil.showToast(context, message: _e.toString());
+    } catch (e) {
+      ToastUtil.showToast(context, message: e.toString());
     } finally {
       isLoading = false;
       notifyListeners();
@@ -137,19 +153,22 @@ class CartProvider with ChangeNotifier {
   Future updateQuantityInFirestore(int index) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     final docId = cartIds[index];
+    double pricePerUnit = productModel[index].price ?? 0;
+    int quantity = productModel[index].quantity ?? 1;
 
     await FirebaseFirestore.instance
         .collection('Cart')
         .doc(userId)
         .collection('Product')
         .doc(docId)
-        .update({'quantity': productModel[index].quantity});
+        .update({'quantity': quantity, 'price': pricePerUnit * quantity});
   }
 
-  void increment(index) async {
+  void increment(int index) async {
     productModel[index].quantity = (productModel[index].quantity ?? 1) + 1;
     notifyListeners();
     await updateQuantityInFirestore(index);
+    totalPrice(); // Update total price
   }
 
   void decrement(int index) async {
@@ -158,16 +177,24 @@ class CartProvider with ChangeNotifier {
       productModel[index].quantity = (productModel[index].quantity ?? 2) - 1;
       notifyListeners();
       await updateQuantityInFirestore(index);
+      totalPrice(); // Update total price
     }
   }
 
-  totalPrice() {
+  double totalPrice() {
     double total = 0.0;
-
     for (var item in productModel) {
       total += (item.price ?? 0) * (item.quantity ?? 1);
     }
     total_price = total;
+    notifyListeners();
     return total;
+  }
+
+  void clearCart() {
+    productModel.clear();
+    cartIds.clear();
+    total_price = 0.0;
+    notifyListeners();
   }
 }

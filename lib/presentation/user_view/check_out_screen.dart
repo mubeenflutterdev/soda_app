@@ -1,10 +1,11 @@
-// ignore_for_file: sized_box_for_whitespace
+// ignore_for_file: sized_box_for_whitespace, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:soda_bar/const/app_colors.dart';
 import 'package:soda_bar/const/app_images.dart';
+import 'package:soda_bar/provider/feature_provider/order_provider.dart';
 import 'package:soda_bar/provider/feature_provider/shop_provider.dart';
 import 'package:soda_bar/provider/ui_provider/check_out_provider.dart';
 import 'package:soda_bar/provider/ui_provider/image_picker_provider.dart';
@@ -42,6 +43,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       context,
     );
     ShopProvider shopProvider = Provider.of<ShopProvider>(context);
+    OrderProvider orderProvider = Provider.of<OrderProvider>(context);
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.only(left: 20.w, right: 10.w),
@@ -222,148 +224,152 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 text: 'Confirm',
                 borderRadius: 5.r,
                 ontap: () {
+                  orderProvider.addOrder('products', context);
+
                   ///////// payment screenshot
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return Dialog(
-                        backgroundColor: Colors.white,
-                        child: Container(
-                          height:
-                              MediaQuery.of(context).size.height *
-                              0.6, // Half screen height
-                          padding: EdgeInsets.all(16),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(
-                                'Payment Screenshot',
-                                style: theme.textTheme.titleMedium!.copyWith(
-                                  fontSize: 20,
-                                ),
-                              ),
+                  // showDialog(
+                  //   context: context,
+                  //   builder: (context) {
+                  //     return Dialog(
+                  //       backgroundColor: Colors.white,
+                  //       child: Container(
+                  //         height:
+                  //             MediaQuery.of(context).size.height *
+                  //             0.6, // Half screen height
+                  //         padding: EdgeInsets.all(16),
+                  //         child: Column(
+                  //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //           children: [
+                  //             Text(
+                  //               'Payment Screenshot',
+                  //               style: theme.textTheme.titleMedium!.copyWith(
+                  //                 fontSize: 20,
+                  //               ),
+                  //             ),
 
-                              GestureDetector(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    builder: (context) {
-                                      return Container(
-                                        width: double.infinity,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                imagePickerProvider
-                                                    .pickerFromCamera(context);
-                                              },
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    WidgetStateProperty.all(
-                                                      AppColors.blackColor,
-                                                    ),
-                                              ),
+                  //             GestureDetector(
+                  //               onTap: () {
+                  //                 showModalBottomSheet(
+                  //                   context: context,
+                  //                   builder: (context) {
+                  //                     return Container(
+                  //                       width: double.infinity,
+                  //                       child: Column(
+                  //                         mainAxisAlignment:
+                  //                             MainAxisAlignment.spaceEvenly,
+                  //                         children: [
+                  //                           ElevatedButton(
+                  //                             onPressed: () {
+                  //                               imagePickerProvider
+                  //                                   .pickerFromCamera(context);
+                  //                             },
+                  //                             style: ButtonStyle(
+                  //                               backgroundColor:
+                  //                                   WidgetStateProperty.all(
+                  //                                     AppColors.blackColor,
+                  //                                   ),
+                  //                             ),
 
-                                              child: Text(
-                                                'Open camera',
-                                                style: TextStyle(
-                                                  color: AppColors.whiteColor,
-                                                ),
-                                              ),
-                                            ),
+                  //                             child: Text(
+                  //                               'Open camera',
+                  //                               style: TextStyle(
+                  //                                 color: AppColors.whiteColor,
+                  //                               ),
+                  //                             ),
+                  //                           ),
 
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                imagePickerProvider
-                                                    .pickerFromGallery(context);
-                                              },
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    WidgetStateProperty.all(
-                                                      AppColors.blackColor,
-                                                    ),
-                                              ),
+                  //                           ElevatedButton(
+                  //                             onPressed: () {
+                  //                               imagePickerProvider
+                  //                                   .pickerFromGallery(context);
+                  //                             },
+                  //                             style: ButtonStyle(
+                  //                               backgroundColor:
+                  //                                   WidgetStateProperty.all(
+                  //                                     AppColors.blackColor,
+                  //                                   ),
+                  //                             ),
 
-                                              child: Text(
-                                                'Open Gallery',
-                                                style: TextStyle(
-                                                  color: AppColors.whiteColor,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
-                                child: Container(
-                                  height: 200.h,
-                                  width: 250.w,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.greyColor.withValues(
-                                      alpha: .6,
-                                    ),
-                                  ),
+                  //                             child: Text(
+                  //                               'Open Gallery',
+                  //                               style: TextStyle(
+                  //                                 color: AppColors.whiteColor,
+                  //                               ),
+                  //                             ),
+                  //                           ),
+                  //                         ],
+                  //                       ),
+                  //                     );
+                  //                   },
+                  //                 );
+                  //               },
+                  //               child: Container(
+                  //                 height: 200.h,
+                  //                 width: 250.w,
+                  //                 decoration: BoxDecoration(
+                  //                   color: AppColors.greyColor.withValues(
+                  //                     alpha: .6,
+                  //                   ),
+                  //                 ),
 
-                                  child: Center(
-                                    child: Image.asset(AppImages.QrImage),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(right: 20.w),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            WidgetStateProperty.all(
-                                              AppColors.blackColor,
-                                            ),
-                                      ),
+                  //                 child: Center(
+                  //                   child: Image.asset(AppImages.QrImage),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //             Padding(
+                  //               padding: EdgeInsets.only(right: 20.w),
+                  //               child: Row(
+                  //                 mainAxisAlignment: MainAxisAlignment.end,
+                  //                 children: [
+                  //                   ElevatedButton(
+                  //                     onPressed: () {
+                  //                       Navigator.pop(context);
+                  //                     },
+                  //                     style: ButtonStyle(
+                  //                       backgroundColor:
+                  //                           WidgetStateProperty.all(
+                  //                             AppColors.blackColor,
+                  //                           ),
+                  //                     ),
 
-                                      child: Text(
-                                        'Cancle',
-                                        style: TextStyle(
-                                          color: AppColors.whiteColor,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 10),
-                                    ElevatedButton(
-                                      onPressed: () {},
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            WidgetStateProperty.all(
-                                              AppColors.buttonBackGround,
-                                            ),
-                                      ),
+                  //                     child: Text(
+                  //                       'Cancle',
+                  //                       style: TextStyle(
+                  //                         color: AppColors.whiteColor,
+                  //                       ),
+                  //                     ),
+                  //                   ),
+                  //                   SizedBox(width: 10),
+                  //                   ElevatedButton(
+                  //                     onPressed: () {},
+                  //                     style: ButtonStyle(
+                  //                       backgroundColor:
+                  //                           WidgetStateProperty.all(
+                  //                             AppColors.buttonBackGround,
+                  //                           ),
+                  //                     ),
 
-                                      child: Text(
-                                        'Submit',
-                                        style: TextStyle(
-                                          color: AppColors.whiteColor,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  );
+                  //                     child: Text(
+                  //                       'Submit',
+                  //                       style: TextStyle(
+                  //                         color: AppColors.whiteColor,
+                  //                       ),
+                  //                     ),
+                  //                   ),
+                  //                 ],
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     );
+                  //   },
+                  // );
                 },
               ),
+              
+              
               SizedBox(height: 20.h),
             ],
           ),

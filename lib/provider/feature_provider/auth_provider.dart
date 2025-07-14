@@ -1,4 +1,3 @@
-
 // ignore_for_file: unused_local_variable, use_build_context_synchronously
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -41,7 +40,6 @@ class AuthentactionProvider with ChangeNotifier {
       }
     } catch (e) {
       // EasyLoading.dismiss();
-      
     }
   }
 
@@ -83,7 +81,6 @@ class AuthentactionProvider with ChangeNotifier {
 
       // Verify user is actually signed in
       if (auth.currentUser != null) {
-        
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => Bottomnavigationbarscreen()),
@@ -118,7 +115,7 @@ class AuthentactionProvider with ChangeNotifier {
       );
 
       notifyListeners();
-   
+
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -137,12 +134,14 @@ class AuthentactionProvider with ChangeNotifier {
         MaterialPageRoute(builder: (context) => Bottomnavigationbarscreen()),
       );
     } catch (e) {
-   
       ToastUtil.showToast(
         context,
         message: e.toString(),
         type: ToastType.error,
       );
+    } finally {
+      isSignUPLoading = false;
+      notifyListeners();
     }
   }
 

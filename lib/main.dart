@@ -12,7 +12,7 @@ import 'package:soda_bar/presentation/auth_view/sign_in_screen.dart';
 import 'package:soda_bar/presentation/user_view/bottom_navigation_bar_screen.dart';
 
 import 'package:soda_bar/provider/feature_provider/auth_provider.dart';
-import 'package:soda_bar/provider/feature_provider/cart_counter_provider.dart';
+
 import 'package:soda_bar/provider/feature_provider/cart_provider.dart';
 import 'package:soda_bar/provider/feature_provider/categories_provider.dart';
 import 'package:soda_bar/provider/feature_provider/order_provider.dart';
@@ -40,7 +40,6 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => BottomBarProvider()),
         ChangeNotifierProvider(create: (_) => NotificationProvider()),
-        ChangeNotifierProvider(create: (_) => CartCounterProvider()),
         ChangeNotifierProvider(create: (_) => ImagePickerProvider()),
         ChangeNotifierProvider(create: (_) => OrderProvider()),
         ChangeNotifierProvider(create: (_) => AuthentactionProvider()),
@@ -51,6 +50,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => CartProvider()),
         ChangeNotifierProvider(create: (_) => CheckOutProvider()),
         ChangeNotifierProvider(create: (_) => ShopProvider()),
+        ChangeNotifierProvider(create: (_) => OrderProvider()),
       ],
 
       /// for using screenUtils package
@@ -113,6 +113,7 @@ class _MyAppState extends State<MyApp> {
           : provider.isSeen == true
           ? SignInScreen()
           : OnboardingScreen(),
+
       debugShowCheckedModeBanner: false,
     );
   }
