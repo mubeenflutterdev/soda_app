@@ -51,4 +51,9 @@ class OrderModel {
     data['updatedAt'] = updatedAt;
     return data;
   }
+
+  @override
+  String toString() {
+    return 'Order(orderId: $orderId, totalAmount: $totalAmount, status: $orderStatus)';
+  }
 }

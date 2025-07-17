@@ -43,7 +43,9 @@ class _GoogleButtonComponentState extends State<GoogleButtonComponent> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CircleAvatar(
+                  backgroundColor: Colors.transparent,
                   backgroundImage: AssetImage(AppImages.googleImage),
+                  radius: 14,
                 ),
                 SizedBox(width: 10.w),
                 Text(

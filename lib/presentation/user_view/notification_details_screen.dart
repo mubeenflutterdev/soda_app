@@ -1,26 +1,47 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:soda_bar/models/notification_model.dart';
 
-class NotificationDetailsScreen extends StatefulWidget {
-  const NotificationDetailsScreen({super.key});
+class NotificationDetailsScreen extends StatelessWidget {
+  String message;
+  String type;
+  List<NotificationModel> notifications;
+  NotificationDetailsScreen({
+    super.key,
+    required this.message,
+    required this.notifications,
+    required this.type,
+  });
 
-  @override
-  State<NotificationDetailsScreen> createState() =>
-      _NotificationDetailsScreenState();
-}
-
-class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Text('Notification', style: TextStyle(fontSize: 30)),
-          Text('Your order is getting ready'),
-          Text(
-            'The fizz booom  is appreciated worldwide during the festival of holi. It’s refrershing tasteThe fizz booom  is appreciated worldwide during the festival of holi. It’s refrershing tasteThe fizz booom  is appreciated worldwide during the festival of holi. It’s refrershing tasteThe fizz booom  is appreciated worldwide during the festival of holi. It’s refrershing tasteThe fizz booom  is appreciated worldwide during the festival of holi. It’s refrershing tasteThe fizz booom  is appreciated worldwide during the festival of holi. It’s refrershing taste',
-          ),
-        ],
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: Text(
+                'Notifications',
+                style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold),
+              ),
+            ),
+            SizedBox(height: 20.h),
+
+            Text(
+              type.toString(),
+              textAlign: TextAlign.start,
+              style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+            ),
+
+            SizedBox(height: 50.h),
+            Text(message.toString(), textAlign: TextAlign.start),
+          ],
+        ),
       ),
     );
   }

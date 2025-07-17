@@ -11,11 +11,14 @@ import 'package:soda_bar/const/app_colors.dart';
 import 'package:soda_bar/models/product_model.dart';
 import 'package:soda_bar/presentation/user_view/details_screen.dart';
 import 'package:soda_bar/provider/feature_provider/categories_provider.dart';
+import 'package:soda_bar/provider/feature_provider/dashboard_provider.dart';
 import 'package:soda_bar/provider/feature_provider/product_provider.dart';
 import 'package:soda_bar/widgets/card/dashboard_component.dart';
 import 'package:soda_bar/widgets/card/product_dashboard_component.dart';
 import 'package:soda_bar/widgets/card/shimmer/categories_shimmer.dart';
 import 'package:soda_bar/widgets/card/shimmer/product_shimmer.dart';
+import 'package:soda_bar/widgets/card/shimmer/shimmer_box.dart';
+import 'package:lottie/lottie.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -38,6 +41,11 @@ class _HomeScreenState extends State<HomeScreen> {
       listen: false,
     );
     productProvider.getProducts(context);
+    final dashboardProvider = Provider.of<DashboardProvider>(
+      context,
+      listen: false,
+    );
+    dashboardProvider.getDashboad(context);
   }
 
   @override
@@ -46,6 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
       context,
     );
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
+    DashboardProvider dashboardProvider = Provider.of<DashboardProvider>(
+      context,
+    );
     /////////   expreiment
     // productProvider.getProducts(context);
     return Scaffold(
@@ -60,7 +71,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemCount: 15,
                   itemBuilder:
                       (BuildContext context, int itemIndex, int pageViewIndex) {
-                        return DashBoardComponent();
+                        return dashboardProvider.isLoading == true
+                            ? ShimmerBox(height: 40, width: double.infinity)
+                            : DashBoardComponent();
                       },
                   options: CarouselOptions(
                     autoPlayAnimationDuration: Duration(seconds: 3),
@@ -70,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
+
               Consumer<CategoriesProvider>(
                 builder: (context, categoriesProvider, child) {
                   return Padding(
@@ -124,9 +138,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             productModel: productProvider.products,
                             category: categoriesProvider.categoriesList[0].name,
                           ),
-                    Center(child: Text('hello')),
-                    Center(child: Text('hello')),
-                    Center(child: Text('hello')),
+                    Center(child: Lottie.asset('assets/images/emptycart.json')),
+                    Center(child: Lottie.asset('assets/images/emptycart.json')),
+                    Center(child: Lottie.asset('assets/images/emptycart.json')),
                   ],
                 ),
               ),
@@ -160,7 +174,7 @@ class ProductPreview extends StatelessWidget {
         itemCount: filteredList.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          childAspectRatio: 0.67,
+          childAspectRatio: 0.677,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
         ),

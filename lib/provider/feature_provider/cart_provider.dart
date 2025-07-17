@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, non_constant_identifier_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -166,18 +168,19 @@ class CartProvider with ChangeNotifier {
 
   void increment(int index) async {
     productModel[index].quantity = (productModel[index].quantity ?? 1) + 1;
-    notifyListeners();
     await updateQuantityInFirestore(index);
     totalPrice(); // Update total price
+    notifyListeners();
   }
 
   void decrement(int index) async {
     if (productModel[index].quantity != null &&
         productModel[index].quantity! > 1) {
       productModel[index].quantity = (productModel[index].quantity ?? 2) - 1;
-      notifyListeners();
+      // notifyListeners();
       await updateQuantityInFirestore(index);
       totalPrice(); // Update total price
+      notifyListeners();
     }
   }
 
@@ -187,7 +190,7 @@ class CartProvider with ChangeNotifier {
       total += (item.price ?? 0) * (item.quantity ?? 1);
     }
     total_price = total;
-    notifyListeners();
+
     return total;
   }
 

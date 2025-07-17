@@ -36,7 +36,7 @@ class _ButtonComponentState extends State<ButtonComponent> {
           borderRadius: BorderRadius.circular(widget.borderRadius),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15),
+          padding: const EdgeInsets.symmetric(vertical: 13),
           child: Center(
             child: Text(
               widget.text,

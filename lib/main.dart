@@ -15,8 +15,10 @@ import 'package:soda_bar/provider/feature_provider/auth_provider.dart';
 
 import 'package:soda_bar/provider/feature_provider/cart_provider.dart';
 import 'package:soda_bar/provider/feature_provider/categories_provider.dart';
+import 'package:soda_bar/provider/feature_provider/dashboard_provider.dart';
 import 'package:soda_bar/provider/feature_provider/order_provider.dart';
 import 'package:soda_bar/provider/feature_provider/product_provider.dart';
+import 'package:soda_bar/provider/feature_provider/profile_provider.dart';
 import 'package:soda_bar/provider/feature_provider/shop_provider.dart';
 import 'package:soda_bar/provider/feature_provider/user_info_provider.dart';
 import 'package:soda_bar/provider/ui_provider/bottom_bar_provider.dart';
@@ -25,7 +27,9 @@ import 'package:soda_bar/provider/ui_provider/check_out_provider.dart';
 import 'package:soda_bar/provider/ui_provider/home_provider.dart';
 import 'package:soda_bar/provider/ui_provider/image_picker_provider.dart';
 import 'package:soda_bar/provider/ui_provider/onboarding_provider.dart';
+import 'package:soda_bar/provider/ui_provider/payment_provider.dart';
 import 'package:soda_bar/provider/ui_provider/theme_provider.dart';
+import 'package:soda_bar/provider/ui_provider/visibality_provider.dart';
 import 'package:soda_bar/utils/custom_theme.dart';
 
 void main() async {
@@ -51,6 +55,11 @@ void main() async {
         ChangeNotifierProvider(create: (_) => CheckOutProvider()),
         ChangeNotifierProvider(create: (_) => ShopProvider()),
         ChangeNotifierProvider(create: (_) => OrderProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationProvider()),
+        ChangeNotifierProvider(create: (_) => VisibalityProvider()),
+        ChangeNotifierProvider(create: (_) => DashboardProvider()),
+        ChangeNotifierProvider(create: (_) => ProfileProvider()),
+        ChangeNotifierProvider(create: (_) => PaymentProvider()),
       ],
 
       /// for using screenUtils package

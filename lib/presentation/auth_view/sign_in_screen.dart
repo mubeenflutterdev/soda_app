@@ -6,7 +6,7 @@ import 'package:soda_bar/presentation/auth_view/forget_password_screen.dart';
 import 'package:soda_bar/presentation/auth_view/sign_up_screen.dart';
 
 import 'package:soda_bar/provider/feature_provider/auth_provider.dart';
-import 'package:soda_bar/widgets/buttons/button_component.dart';
+
 import 'package:soda_bar/widgets/buttons/google_button_component.dart';
 import 'package:soda_bar/widgets/text_field/text_form_field_component.dart';
 
@@ -115,7 +115,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     },
                     child: Container(
                       width: double.infinity,
-                      height: 80.h,
+                      height: 53.h,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: AppColors.buttonBackGround,
@@ -134,7 +134,6 @@ class _SignInScreenState extends State<SignInScreen> {
                             ),
                     ),
                   );
-                 
                 },
               ),
               Padding(

@@ -1,7 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:soda_bar/models/user_model.dart';
@@ -56,12 +60,23 @@ class UserInfoProvider with ChangeNotifier {
       );
       notifyListeners();
     } catch (e) {
-   
       ToastUtil.showToast(
         context,
         message: e.toString(),
         type: ToastType.error,
       );
+    }
+  }
+
+  Future updateName(String name, BuildContext context) async {
+    try {
+      final userUid = FirebaseAuth.instance.currentUser!.uid;
+      await FirebaseFirestore.instance.collection('users').doc(userUid).update({
+        'name': name,
+      });
+      getUserInfo(context);
+    } catch (e) {
+      ToastUtil.showToast(context, message: e.toString());
     }
   }
 }

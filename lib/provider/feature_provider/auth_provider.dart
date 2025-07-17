@@ -146,12 +146,16 @@ class AuthentactionProvider with ChangeNotifier {
     }
   }
 
-  Future forgetPassord(String email, BuildContext context) async {
+ 
+  Future logOut(BuildContext context) async {
     try {
-      isSignUPLoading = true;
       notifyListeners();
 
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      await FirebaseAuth.instance.signOut();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SignInScreen()),
+      );
     } catch (e) {
       ToastUtil.showToast(
         context,
@@ -161,14 +165,13 @@ class AuthentactionProvider with ChangeNotifier {
     }
   }
 
-  Future logOut(BuildContext context) async {
+  Future forgetPassword(BuildContext context, String email) async {
     try {
-      notifyListeners();
-
-      await FirebaseAuth.instance.signOut();
-      Navigator.push(
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      ToastUtil.showToast(
         context,
-        MaterialPageRoute(builder: (context) => SignInScreen()),
+        message: 'Reset Email Send Sucessfully',
+        type: ToastType.success,
       );
     } catch (e) {
       ToastUtil.showToast(

@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers
+// ignore_for_file: avoid_unnecessary_containers, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,111 +35,147 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: PageView(
                 controller: controler,
                 children: [
-                  Container(
-                    child: Column(
-                      children: [
-                        SizedBox(height: 50.h),
-                        Image.asset(AppImages.splashImage, height: 350.h),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 50.w,
-                            vertical: 10.h,
-                          ),
-                          child: Text(
-                            'ENJOY EVERY SIP',
-                            style: GoogleFonts.montserrat(
-                              color: AppColors.whiteColor,
-                              fontSize: 30.sp,
-                              fontWeight: FontWeight.bold,
+                  /// This is 1st view
+                  SingleChildScrollView(
+                    child: Container(
+                      child: Column(
+                        children: [
+                          SizedBox(height: 50.h),
+                          SizedBox(
+                            height: 300.h,
+                            // width: 300.h,
+                            child: Image.asset(
+                              AppImages.sodaBottleImage,
+                              fit: BoxFit.contain,
                             ),
-                            textAlign: TextAlign.center,
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 95.w),
-                          child: Text(
-                            'The ultimate refreshing drink to enjoy in every festival',
-                            style: GoogleFonts.montserrat(
-                              color: AppColors.whiteColor,
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.bold,
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 50.w,
+                              vertical: 30.h,
                             ),
-                            textAlign: TextAlign.center,
+                            child: Text(
+                              'ENJOY EVERY SIP',
+                              style: GoogleFonts.montserrat(
+                                color: AppColors.whiteColor,
+                                fontSize: 30.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 95.w,
+                              vertical: 20,
+                            ),
+                            child: Text(
+                              'The ultimate refreshing drink to enjoy in every festival',
+                              style: GoogleFonts.montserrat(
+                                color: AppColors.whiteColor,
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
 
-                  Container(
-                    child: Column(
-                      children: [
-                        SizedBox(height: 50.h),
-                        Image.asset(AppImages.splashImage, height: 350.h),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 50.w,
-                            vertical: 10.h,
-                          ),
-                          child: Text(
-                            'ENJOY EVERY SIP',
-                            style: GoogleFonts.montserrat(
-                              color: AppColors.whiteColor,
-                              fontSize: 30.sp,
-                              fontWeight: FontWeight.bold,
+                  /// this is 2nd view
+                  SingleChildScrollView(
+                    child: Container(
+                      child: Column(
+                        children: [
+                          SizedBox(height: 70.h),
+                          SizedBox(
+                            height: 320,
+                            // width: 300,
+                            child: Image.asset(
+                              AppImages.smallChelly,
+                              fit: BoxFit.contain,
                             ),
-                            textAlign: TextAlign.center,
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 95.w),
-                          child: Text(
-                            'The ultimate refreshing drink to enjoy in every festival',
-                            style: GoogleFonts.montserrat(
-                              color: AppColors.whiteColor,
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.bold,
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 50.w,
+                              vertical: 50.h,
                             ),
-                            textAlign: TextAlign.center,
+                            child: Text(
+                              'Come here together',
+                              style: GoogleFonts.montserrat(
+                                color: AppColors.whiteColor,
+                                fontSize: 30.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 95.w),
+                            child: Text(
+                              'Cool sips, no matter the season.Just come to enjoy',
+                              style: GoogleFonts.montserrat(
+                                color: AppColors.whiteColor,
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
 
-                  Container(
-                    child: Column(
-                      children: [
-                        SizedBox(height: 50.h),
-                        Image.asset(AppImages.splashImage, height: 350.h),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 50.w,
-                            vertical: 10.h,
-                          ),
-                          child: Text(
-                            'ENJOY EVERY SIP',
-                            style: GoogleFonts.montserrat(
-                              color: AppColors.whiteColor,
-                              fontSize: 30.sp,
-                              fontWeight: FontWeight.bold,
+                  /// this is 3rd view
+                  SingleChildScrollView(
+                    child: Container(
+                      child: Column(
+                        children: [
+                          SizedBox(height: 50.h),
+                          SizedBox(
+                            height: 300.h,
+                            // width: 300.h,
+                            child: Image.asset(
+                              AppImages.sodaBottleImage,
+                              fit: BoxFit.contain,
                             ),
-                            textAlign: TextAlign.center,
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 95.w),
-                          child: Text(
-                            'The ultimate refreshing drink to enjoy in every festival',
-                            style: GoogleFonts.montserrat(
-                              color: AppColors.whiteColor,
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.bold,
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 50.w,
+                              vertical: 30.h,
                             ),
-                            textAlign: TextAlign.center,
+                            child: Text(
+                              'Name of Qulaity',
+                              style: GoogleFonts.montserrat(
+                                color: AppColors.whiteColor,
+                                fontSize: 30.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 95.w,
+                              vertical: 20,
+                            ),
+                            child: Text(
+                              'Only trusted items Surved here for youre health ',
+                              style: GoogleFonts.montserrat(
+                                color: AppColors.whiteColor,
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -221,7 +257,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 padding: EdgeInsets.symmetric(),
                                 child: Center(
                                   child: Text(
-                                    "Buy",
+                                    "Next",
                                     style: TextStyle(
                                       color: AppColors.whiteColor,
                                     ),

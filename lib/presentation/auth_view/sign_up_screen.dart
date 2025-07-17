@@ -6,10 +6,10 @@ import 'package:provider/provider.dart';
 import 'package:soda_bar/const/app_colors.dart';
 
 import 'package:soda_bar/presentation/auth_view/sign_in_screen.dart';
-import 'package:soda_bar/presentation/user_view/bottom_navigation_bar_screen.dart';
 
 import 'package:soda_bar/provider/feature_provider/auth_provider.dart';
 import 'package:soda_bar/provider/feature_provider/user_info_provider.dart';
+import 'package:soda_bar/provider/ui_provider/visibality_provider.dart';
 
 import 'package:soda_bar/widgets/buttons/button_component.dart';
 import 'package:soda_bar/widgets/buttons/google_button_component.dart';
@@ -33,6 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     final signUpProvider = Provider.of<AuthentactionProvider>(context);
     final userInfoProvider = Provider.of<UserInfoProvider>(context);
+    final obSecureProvider = Provider.of<VisibalityProvider>(context);
 
     return Scaffold(
       body: Padding(
@@ -49,7 +50,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(height: 10.h),
               Center(
                 child: Text(
-                  'Create an account to begin your Learning\nJourney',
+                  'Create an account to begin your Learning Journey',
                   style: TextStyle(fontSize: 16.sp),
                   textAlign: TextAlign.center,
                 ),
@@ -63,7 +64,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   }
                   return null;
                 },
-                text: 'Your Name Here:',
+                text: 'Your Name Here',
                 contentPaddingHeiht: 20,
                 contentPaddingWidth: 20,
                 controler: nameControler,
@@ -78,7 +79,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   }
                   return null;
                 },
-                text: 'Your Email Here:',
+                text: 'Your Email Here',
                 contentPaddingHeiht: 20,
                 contentPaddingWidth: 20,
                 controler: emailControler,
@@ -93,7 +94,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   }
                   return null;
                 },
-                text: '*******************',
+                obsecure: obSecureProvider.isHide,
+                text: 'Enter youre password',
                 contentPaddingHeiht: 20,
                 contentPaddingWidth: 20,
                 controler: passwordControler,
@@ -109,7 +111,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   }
                   return null;
                 },
-                text: '*******************',
+                text: 'Confirm password',
+                obsecure: obSecureProvider.isHide,
                 contentPaddingHeiht: 20,
                 contentPaddingWidth: 20,
                 controler: confirmPasswordControler,
@@ -118,11 +121,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               SizedBox(height: 20.h),
 
-              ButtonComponent(
-                text: 'Upload Profile Image',
-                borderRadius: 20,
-                ontap: () {},
-              ),
               SizedBox(height: 20.h),
               Consumer<AuthentactionProvider>(
                 builder: (context, provider, child) {
@@ -153,7 +151,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                     child: Container(
                       width: double.infinity,
-                      height: 80.h,
+                      height: 53.h,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: AppColors.buttonBackGround,
@@ -166,7 +164,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             )
                           : Center(
                               child: Text(
-                                'Sign In',
+                                'SignUp',
                                 style: TextStyle(color: AppColors.whiteColor),
                               ),
                             ),

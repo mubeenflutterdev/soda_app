@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable, prefer_typing_uninitialized_variables, unnecessary_string_escapes
 
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:soda_bar/const/app_colors.dart';
@@ -39,26 +38,12 @@ class ProductDasboard extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+
           children: [
-            CarouselSlider.builder(
-              itemCount: 3,
-              itemBuilder: (context, index, realIndex) {
-                return Image.network(img, height: 150);
-              },
-              options: CarouselOptions(
-                aspectRatio: 16 / 14.3,
-                autoPlay: true,
-                autoPlayAnimationDuration: Duration(seconds: 1),
-                autoPlayCurve: Curves.bounceOut,
-                pauseAutoPlayOnTouch: true,
-                // autoPlayInterval: Duration(milliseconds: 10),
-              ),
+            Padding(
+              padding: const EdgeInsets.only(left: 37),
+              child: Image.network(img, height: 147.5),
             ),
-            // Center(
-
-            //   child: Image.network(img, height: 150)
-
-            //   ),
             Padding(
               padding: EdgeInsets.only(left: 10.w),
               child: Text(

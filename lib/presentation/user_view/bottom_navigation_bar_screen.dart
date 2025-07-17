@@ -9,11 +9,13 @@ import 'package:soda_bar/const/app_colors.dart';
 
 import 'package:soda_bar/presentation/user_view/cart_screen.dart';
 
-
 import 'package:soda_bar/presentation/user_view/home_screen.dart';
 import 'package:soda_bar/presentation/user_view/notification_screen.dart';
+import 'package:soda_bar/presentation/user_view/order_screen.dart';
 
 import 'package:soda_bar/presentation/user_view/profile_screen.dart';
+import 'package:soda_bar/provider/feature_provider/dashboard_provider.dart';
+import 'package:soda_bar/provider/feature_provider/product_provider.dart';
 import 'package:soda_bar/provider/feature_provider/user_info_provider.dart';
 import 'package:soda_bar/provider/ui_provider/bottom_bar_provider.dart';
 
@@ -28,13 +30,22 @@ class Bottomnavigationbarscreen extends StatefulWidget {
 class _BottomnavigationbarscreenState extends State<Bottomnavigationbarscreen> {
   @override
   void initState() {
-
     super.initState();
     final userInfoProvider = Provider.of<UserInfoProvider>(
       context,
       listen: false,
     );
     userInfoProvider.getUserInfo(context);
+    final productProvider = Provider.of<ProductProvider>(
+      context,
+      listen: false,
+    );
+    productProvider.getProducts(context);
+    final dashboardProvider = Provider.of<DashboardProvider>(
+      context,
+      listen: false,
+    );
+    dashboardProvider.getDashboad(context);
   }
 
   @override
@@ -44,9 +55,11 @@ class _BottomnavigationbarscreenState extends State<Bottomnavigationbarscreen> {
     final provider = Provider.of<BottomBarProvider>(context);
     List screens = [
       HomeScreen(),
+
       CartScreen(),
+      OrderScreen(),
       NotificationScreen(),
-      CartScreen(),
+
       ProfileScreen(),
     ];
 

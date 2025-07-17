@@ -45,7 +45,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ),
               ),
               Positioned(
-                right: 5,
+                right: 10.w,
+                left: 0,
                 bottom: 320.h,
                 child: SizedBox(
                   height: 400,
@@ -165,7 +166,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   },
                                   child: provider.isLoading == true
                                       ? Center(
-                                          child: CircularProgressIndicator(),
+                                          child: CircularProgressIndicator(
+                                            color: AppColors.whiteColor,
+                                          ),
                                         )
                                       : Text(
                                           'Add To Cart',

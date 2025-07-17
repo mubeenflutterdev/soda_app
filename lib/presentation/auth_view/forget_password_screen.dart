@@ -19,7 +19,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final forgetProvider = Provider.of<AuthentactionProvider>(context);
+    final authProvider = Provider.of<AuthentactionProvider>(context);
 
     return Scaffold(
       body: Padding(
@@ -30,11 +30,17 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
             child: Column(
               children: [
                 SizedBox(height: 184.h),
-                Text('Reset Password', style: TextStyle(fontSize: 39.sp)),
+                Center(
+                  child: Text(
+                    'Reset Password',
+                    style: TextStyle(fontSize: 33.sp),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
                 SizedBox(height: 10.h),
 
                 Text(
-                  'Please enter your email to receive a password\n reset link',
+                  'Please enter your email to receive a password reset link',
                   style: TextStyle(fontSize: 12.sp),
                   textAlign: TextAlign.center,
                 ),
@@ -47,7 +53,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     }
                     return null;
                   },
-                  text: 'Email:',
+                  text: 'Email',
                   contentPaddingHeiht: 1,
                   contentPaddingWidth: 100,
                   controler: forgetPasswordControler,
@@ -61,11 +67,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     String email = forgetPasswordControler.text
                         .trim()
                         .toString();
-                         if (_formKey.currentState!.validate()) {
-                    forgetProvider.forgetPassord(email, context);
-                    
-                    
-                  }
+                    if (_formKey.currentState!.validate()) {
+                      authProvider.forgetPassword(context, email);
+                    }
                   },
                 ),
               ],
