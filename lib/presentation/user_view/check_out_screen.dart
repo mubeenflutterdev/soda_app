@@ -5,11 +5,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:soda_bar/const/app_colors.dart';
 import 'package:soda_bar/const/app_images.dart';
+import 'package:soda_bar/provider/feature_provider/admin_notifications_provider.dart';
+import 'package:soda_bar/provider/feature_provider/admin_tokken_provider.dart';
 import 'package:soda_bar/provider/feature_provider/order_provider.dart';
 import 'package:soda_bar/provider/feature_provider/shop_provider.dart';
 import 'package:soda_bar/provider/ui_provider/check_out_provider.dart';
 import 'package:soda_bar/provider/ui_provider/image_picker_provider.dart';
 import 'package:soda_bar/provider/ui_provider/payment_provider.dart';
+import 'package:soda_bar/services/notification_services.dart';
+import 'package:soda_bar/services/send_notification_service.dart';
 
 class CheckOutScreen extends StatefulWidget {
   int totalItems;
@@ -32,11 +36,23 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       context,
       listen: false,
     );
+    AdminTokkenProvider adminTokkenProvider = Provider.of<AdminTokkenProvider>(
+      context,
+      listen: false,
+    );
+    AdminNotificationsProvider adminNotificationsProvider =
+        Provider.of<AdminNotificationsProvider>(context, listen: false);
+    adminNotificationsProvider.getNotificationForAdmin(context);
     shopProvider.getTable(context);
+    adminTokkenProvider.getAdminToken(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    AdminNotificationsProvider adminNotificationsProvider =
+        Provider.of<AdminNotificationsProvider>(context, listen: false);
+    NotificationServices notificationServices = NotificationServices();
+
     final theme = Theme.of(context);
     ImagePickerProvider imagePickerProvider = Provider.of<ImagePickerProvider>(
       context,
@@ -258,8 +274,22 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   Consumer<OrderProvider>(
                     builder: (context, Provider, child) {
                       return GestureDetector(
-                        onTap: () {
+                        onTap: () async {
                           Provider.addOrder('products', context);
+                          adminNotificationsProvider.addNotificationForAdmin(
+                            context,
+                            'title',
+                            'body',
+                            false,
+                          );
+                          final token = await notificationServices
+                              .getDeviceToken();
+                          await SendNotificationService.sendNotificationUsingApi(
+                            token: token,
+                            title: 'New order placed Detected',
+                            body: 'Boss a new order is placed with ,,,,,,',
+                            data: {'screen': 'message'},
+                          );
                         },
                         child: Container(
                           height: 70,

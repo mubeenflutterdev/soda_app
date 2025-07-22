@@ -1,4 +1,3 @@
-
 // ignore_for_file: unused_local_variable
 
 import 'package:flutter/cupertino.dart';
@@ -58,7 +57,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Text(
                         'Save',
                         style: TextStyle(
-                          color: Colors.blue,
+                          color: Color(0xff0DB295),
                           fontWeight: FontWeight.bold,
                           fontSize: 14.sp,
                         ),
@@ -112,8 +111,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(height: 20),
               ListTile(
                 onTap: () async {
-               await   productProvider.getProducts(context);
-              
+                  await productProvider.getProducts(context);
+
                   // try {
                   //   await FirebaseFirestore.instance
                   //       .collection('products')

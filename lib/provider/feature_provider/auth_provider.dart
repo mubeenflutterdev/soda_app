@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:soda_bar/presentation/auth_view/sign_in_screen.dart';
+import 'package:soda_bar/presentation/user_view/admin_screen.dart';
 import 'package:soda_bar/presentation/user_view/bottom_navigation_bar_screen.dart';
 import 'package:soda_bar/provider/feature_provider/user_info_provider.dart';
 import 'package:soda_bar/utils/toast_utils.dart';
@@ -78,12 +79,23 @@ class AuthentactionProvider with ChangeNotifier {
         email: email,
         password: password,
       );
+      UserInfoProvider userInfoProvider = Provider.of<UserInfoProvider>(
+        context,
+        listen: false,
+      );
+      final response = await userInfoProvider.getUserInfo(context);
+      bool isAdmin = userInfoProvider.userInfo!.isAdmin;
 
       // Verify user is actually signed in
-      if (auth.currentUser != null) {
+      if (auth.currentUser != null && isAdmin == false) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => Bottomnavigationbarscreen()),
+        );
+      } else if (auth.currentUser != null && isAdmin == true) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => AdminScreen()),
         );
       } else {
         throw Exception("User signed in but currentUser is null");
@@ -146,7 +158,6 @@ class AuthentactionProvider with ChangeNotifier {
     }
   }
 
- 
   Future logOut(BuildContext context) async {
     try {
       notifyListeners();

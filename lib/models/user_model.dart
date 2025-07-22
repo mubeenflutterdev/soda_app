@@ -9,6 +9,7 @@ class UserModel {
   final DateTime lastLogin;
   final String deviceToken;
   final DateTime updatedAt;
+  final bool isAdmin;
 
   UserModel({
     required this.uid,
@@ -19,6 +20,7 @@ class UserModel {
     required this.lastLogin,
     required this.deviceToken,
     required this.updatedAt,
+    this.isAdmin = false,
   });
 
   /// Convert Firestore document to UserModel
@@ -35,6 +37,7 @@ class UserModel {
       lastLogin: (data['lastLogin'] as Timestamp?)?.toDate() ?? DateTime.now(),
       deviceToken: data['deviceToken'] ?? '',
       updatedAt: (data['updatedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
+      isAdmin: (data['isAdmin'] as bool?) ?? false,
     );
   }
 
@@ -49,6 +52,7 @@ class UserModel {
       'lastLogin': lastLogin,
       'deviceToken': deviceToken,
       'updatedAt': updatedAt,
+      'isAdmin': isAdmin,
     };
   }
 }

@@ -1,4 +1,4 @@
-package com.example.soda_bar
+package com.mubeen.soda_bar
 
 import io.flutter.embedding.android.FlutterActivity
 

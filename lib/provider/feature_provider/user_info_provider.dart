@@ -9,6 +9,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:soda_bar/models/user_model.dart';
+import 'package:soda_bar/services/notification_services.dart';
 import 'package:soda_bar/utils/toast_utils.dart';
 
 class UserInfoProvider with ChangeNotifier {
@@ -24,6 +25,12 @@ class UserInfoProvider with ChangeNotifier {
     BuildContext context,
   ) async {
     try {
+      String? token = await NotificationServices().getDeviceToken();
+
+      print(
+        '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@GGGGG',
+      );
+      print(token);
       UserModel userModel = UserModel(
         uid: userId,
         name: name,
@@ -31,7 +38,7 @@ class UserInfoProvider with ChangeNotifier {
         profileImage: profileImage,
         createdAt: DateTime.now(),
         lastLogin: lastLogin,
-        deviceToken: 'deviceToken',
+        deviceToken: token.toString(),
         updatedAt: updatedAt,
       );
 
